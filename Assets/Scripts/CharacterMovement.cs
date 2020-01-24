@@ -8,8 +8,7 @@ public class CharacterMovement : MonoBehaviour
     public float jumpForce;
     public float distanceToGround;
     bool isRunning = false;
-    public Animator anim;
-    public GameObject ground;
+    public Animator anim;    
     LayerMask walkable;
     Rigidbody rb;
    
@@ -30,8 +29,9 @@ public class CharacterMovement : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Debug.Log(Physics.Raycast(this.transform.position, Vector3.down, distanceToGround, walkable));
-        Debug.DrawRay(this.transform.position, Vector3.down, Color.red, distanceToGround);
+        // draw raycast going down
+        Debug.Log(Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable));
+        Debug.DrawRay(this.transform.position, -Vector3.up, Color.red, distanceToGround);
 
 
         Vector3 playerMoveVector = new Vector3(horizontal, 0, vertical).normalized * Speed * Time.deltaTime;
@@ -75,7 +75,7 @@ public class CharacterMovement : MonoBehaviour
 
     bool NotGrounded()
     {
-      return Physics.Raycast(this.transform.position, Vector3.down, distanceToGround, walkable);
+      return Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable);
     }
     
 }
