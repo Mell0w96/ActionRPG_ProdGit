@@ -32,11 +32,15 @@ public class GoblinKingBehaviour : MonoBehaviour
     public float maxRangedRange;
     float distanceFromPlayer;
 
-    public float _timeUntilRage;
-    public float _currentRageTime;
+    public float _boilingPoint;
+    private float boilingpoint;
 
-    // Chargin Variables
-    public float rageSpeed;
+    
+
+    // Charging Variables
+    public float rageSpeedMultiplier;
+    public float _rageTime;
+    private float rageTime;
 
     // Attacking Variables
     private float TimeTillNextAttackRate;
@@ -61,7 +65,7 @@ public class GoblinKingBehaviour : MonoBehaviour
         anim = GetComponent<Animator>();
         vision = visionCone.GetComponent<Vision>();
 
-        throwingRate = _throwingRate;
+        
         currentRateUntilScanning = startRateUntilScanning;
         totalScanTime = _totalScanTime;
         
@@ -99,16 +103,11 @@ public class GoblinKingBehaviour : MonoBehaviour
                     
                     }
 
-
-
                     if (vision.isInVision == true)
                     {
                         print("Chasing");
                         _currentState = GoblinState.Chasing;
                     }
-                    
-
-
 
                     break;
                 }
@@ -141,22 +140,16 @@ public class GoblinKingBehaviour : MonoBehaviour
                     break;                
                 }
             case GoblinState.Chasing: 
-                {         
+                {
+                    
+                    boilingpoint = _boilingPoint;
 
-                                                                     
 
                     agent.SetDestination(player.position);
                     agent.speed = _movementSpeed * speedMultiplier;
                     anim.SetBool("isChasing", true);
 
                     print("PLAYER FOUND PLAYER FOUND");
-                    
-
-                    
-
-
-
-
 
                     //if player comes within vision then chase 
                     if (distanceFromPlayer <= meleeRange)
@@ -164,18 +157,28 @@ public class GoblinKingBehaviour : MonoBehaviour
                         //attack the player
 
                         _currentState = GoblinState.Attacking;
-                        anim.SetInteger("AttackValue", 1);
-                        
-
-
+                        TimeTillNextAttackRate = 0;
 
                     }
                     else if (distanceFromPlayer > minRangedRange && distanceFromPlayer <= maxRangedRange)
                     {
+                        print("SPEAR TIME");
                         //throw spear at player
-                       
+                        _currentState = GoblinState.ThrowingSpear;
+                        throwingRate = 0f;
 
-                    } 
+                    }
+
+                    if (boilingpoint > 0) 
+                    {
+                        boilingpoint -= Time.deltaTime;                    
+                    }
+                    else
+                    {
+                        _currentState = GoblinState.Charging;
+                        rageTime = _rageTime;
+                    
+                    }
 
                     if (vision.isInVision == false)
                     {
@@ -188,15 +191,85 @@ public class GoblinKingBehaviour : MonoBehaviour
                 }
             case GoblinState.Attacking: 
                 {
+                    if (TimeTillNextAttackRate > 0)
+                    {
+                        TimeTillNextAttackRate -= Time.deltaTime;                       
 
-                    anim.SetInteger("AttackValue", 1);
-                       
-                        
+                    }
+                    else 
+                    {
+                        TimeTillNextAttackRate = _attackRate;
+                        AttackingPlayer();
                     
+                    }
+
                     if (distanceFromPlayer >= meleeRange)
                     {
                         _currentState = GoblinState.Chasing;
                         anim.SetInteger("AttackValue", 0);
+                    }
+
+                    break;
+                
+                }
+            case GoblinState.ThrowingSpear: 
+                {
+                    if (throwingRate > 0)
+                    {
+                        throwingRate -= Time.deltaTime;
+
+                    }
+                    else 
+                    {
+                        throwingRate = _throwingRate;
+                        ThrowTheSpear();
+                        
+                    }
+
+                    if (distanceFromPlayer <= meleeRange) 
+                    {
+                        _currentState = GoblinState.Attacking;
+                        anim.SetInteger("AttackValue", 1);
+                    }
+
+                    if (vision.isInVision == false) 
+                    {
+                        _currentState = GoblinState.OntheLookOut;
+                        anim.SetInteger("AttackValue", 0);
+                        print("ALRIGHT NO MORE");
+                    }
+
+                    break;             
+                
+                }
+            case GoblinState.Charging: 
+                {
+                    if (rageTime > 0)
+                    {
+                        print("COME HERE YOU MAGGOT");
+                        rageTime -= Time.deltaTime;
+                        anim.SetFloat("RageEngaged", 1);
+                        agent.speed = _movementSpeed * rageSpeedMultiplier;
+                    }
+
+                    else 
+                    {
+                        _currentState = GoblinState.Chasing;
+                        anim.SetFloat("RageEngaged", 0);
+                    }
+
+                    if (distanceFromPlayer <= meleeRange) 
+                    {
+                        anim.SetFloat("RageEngaged", 0);
+                        _currentState = GoblinState.Attacking;
+
+                    }
+
+                    if (vision.isInVision == false) 
+                    {
+                        anim.SetFloat("RageEngaged", 0);
+                        _currentState = GoblinState.OntheLookOut;
+
                     }
 
                     break;
@@ -209,11 +282,30 @@ public class GoblinKingBehaviour : MonoBehaviour
     
     }
 
-    void SetAttackRate() 
-    {
-        TimeTillNextAttackRate = 0f;
-    
+    public void AttackingPlayer() 
+    {        
+            anim.SetInteger("AttackValue", 1);   
     }
+
+    public void ThrowTheSpear() 
+    {
+        anim.SetInteger("AttackValue", 2);
+    }
+
+    public void ThrowSpear()
+    {
+
+        Instantiate(spearPref, ThrowingPosition.transform.position, ThrowingPosition.transform.rotation);
+
+
+    }
+
+    public void WaitingCooldown() 
+    {
+        anim.SetInteger("AttackValue", 0);
+
+    }
+
 
     Vector3 newRandomPosition()
     {
@@ -252,16 +344,9 @@ public class GoblinKingBehaviour : MonoBehaviour
     {
         Target = newRandomPosition();
 
-        agent.SetDestination(Target);
-    }
+        agent.SetDestination(Target);    }
 
-    public void ThrowSpear()
-    {
-
-        Instantiate(spearPref, ThrowingPosition.transform.position, ThrowingPosition.transform.rotation);
-
-
-    }
+ 
 }
 
 public enum GoblinState

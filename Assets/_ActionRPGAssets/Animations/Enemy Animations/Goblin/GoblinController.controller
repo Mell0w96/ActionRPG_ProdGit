@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Goblin_Attack
-  m_Speed: 0.75
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7969166310021738619}
@@ -25,8 +25,8 @@ AnimatorState:
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_CycleOffsetParameter: RageEngaged
+  m_TimeParameter: RageEngaged
 --- !u!1101 &-8617737887524223386
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

@@ -755,16 +755,16 @@ MonoBehaviour:
   startRateUntilScanning: 10
   _totalScanTime: 7
   meleeRange: 2
-  minRangedRange: 5
-  maxRangedRange: 8
-  _timeUntilRage: 0
-  _currentRageTime: 0
-  rageSpeed: 0
-  _attackRate: 1
+  minRangedRange: 8
+  maxRangedRange: 13
+  _boilingPoint: 5
+  rageSpeedMultiplier: 3
+  _rageTime: 3
+  _attackRate: 2
   spearPref: {fileID: 6764250874403623311, guid: 18f8865eebb5cf64b8fded0c50f8ff1a,
     type: 3}
   ThrowingPosition: {fileID: 1402896334}
-  _throwingRate: 0
+  _throwingRate: 4
 --- !u!1 &1763216822
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,8 +852,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763216822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0.92, z: -0.8}
-  m_LocalScale: {x: 69.59894, y: 0.14782, z: 88.517944}
+  m_LocalPosition: {x: 0.039997, y: 0.92, z: -0.8}
+  m_LocalScale: {x: 299.96445, y: 0.14782, z: 428.57733}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
