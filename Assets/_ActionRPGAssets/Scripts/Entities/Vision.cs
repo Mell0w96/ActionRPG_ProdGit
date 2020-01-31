@@ -18,6 +18,15 @@ public class Vision : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player") 
+        {
+            isInVision = true;   
+        
+        }
+    }
+
     void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag == "Player")

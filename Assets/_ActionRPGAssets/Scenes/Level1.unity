@@ -616,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.741433
+      value: 12.1
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalPosition.y
@@ -624,23 +624,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.921757
+      value: 72.4
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99783
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.06584329
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_RootOrder
@@ -652,7 +652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 187.551
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -755,9 +755,8 @@ MonoBehaviour:
   startRateUntilScanning: 10
   _totalScanTime: 7
   meleeRange: 2
-  minRangedRange: 8
-  maxRangedRange: 13
-  _boilingPoint: 5
+  minRangedRange: 10
+  maxRangedRange: 30
   rageSpeedMultiplier: 3
   _rageTime: 3
   _attackRate: 2
