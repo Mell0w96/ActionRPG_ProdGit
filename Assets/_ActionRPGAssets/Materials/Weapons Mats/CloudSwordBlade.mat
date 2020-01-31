@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cloud Shader
+  m_Name: CloudSwordBlade
   m_Shader: {fileID: -6465566751694194690, guid: 26e9ec98e4f01e940a1ee346428556ce,
     type: 3}
   m_ShaderKeywords: 
@@ -42,7 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_30DB75E4: 0
-    - Vector1_945DEBFC: 0
+    - Vector1_945DEBFC: -0.02
     - Vector1_CE32B92E: 1
     m_Colors:
-    - Color_29B3499D: {r: 0.5330188, g: 0.8132075, b: 1, a: 1}
+    - Color_29B3499D: {r: 0.8726415, g: 1, b: 0.98880535, a: 1}
