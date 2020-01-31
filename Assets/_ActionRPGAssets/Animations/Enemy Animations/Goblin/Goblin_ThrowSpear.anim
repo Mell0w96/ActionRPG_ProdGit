@@ -35676,7 +35676,8 @@ AnimationClip:
   - time: 0.5833333
     functionName: ThrowSpear
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 6764250874403623311, guid: 18f8865eebb5cf64b8fded0c50f8ff1a,
+      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

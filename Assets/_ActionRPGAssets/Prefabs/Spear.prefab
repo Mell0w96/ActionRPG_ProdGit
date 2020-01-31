@@ -55,6 +55,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6764250874403623311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad65d5dd15f813643ba6659eb36d329b, type: 3}
+  m_Script: {fileID: 11500000, guid: f9a6a521ef542d7498d9f4188a81c955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spearSpeed: 10
