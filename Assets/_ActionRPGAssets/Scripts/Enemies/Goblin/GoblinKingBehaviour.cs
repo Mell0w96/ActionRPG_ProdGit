@@ -32,8 +32,7 @@ public class GoblinKingBehaviour : MonoBehaviour
     public float maxRangedRange;
     float distanceFromPlayer;
 
-    public float _boilingPoint;
-    private float boilingpoint;
+  
 
     
 
@@ -141,10 +140,6 @@ public class GoblinKingBehaviour : MonoBehaviour
                 }
             case GoblinState.Chasing: 
                 {
-                    
-                    boilingpoint = _boilingPoint;
-
-
                     agent.SetDestination(player.position);
                     agent.speed = _movementSpeed * speedMultiplier;
                     anim.SetBool("isChasing", true);
@@ -168,17 +163,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                         throwingRate = 0f;
 
                     }
-
-                    if (boilingpoint > 0) 
-                    {
-                        boilingpoint -= Time.deltaTime;                    
-                    }
-                    else
-                    {
-                        _currentState = GoblinState.Charging;
-                        rageTime = _rageTime;
-                    
-                    }
+                   
 
                     if (vision.isInVision == false)
                     {
@@ -217,6 +202,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                     if (throwingRate > 0)
                     {
                         throwingRate -= Time.deltaTime;
+                        agent.SetDestination(player.position);
 
                     }
                     else 
@@ -236,45 +222,14 @@ public class GoblinKingBehaviour : MonoBehaviour
                     {
                         _currentState = GoblinState.OntheLookOut;
                         anim.SetInteger("AttackValue", 0);
+                        
                         print("ALRIGHT NO MORE");
                     }
 
                     break;             
                 
                 }
-            case GoblinState.Charging: 
-                {
-                    if (rageTime > 0)
-                    {
-                        print("COME HERE YOU MAGGOT");
-                        rageTime -= Time.deltaTime;
-                        anim.SetFloat("RageEngaged", 1);
-                        agent.speed = _movementSpeed * rageSpeedMultiplier;
-                    }
-
-                    else 
-                    {
-                        _currentState = GoblinState.Chasing;
-                        anim.SetFloat("RageEngaged", 0);
-                    }
-
-                    if (distanceFromPlayer <= meleeRange) 
-                    {
-                        anim.SetFloat("RageEngaged", 0);
-                        _currentState = GoblinState.Attacking;
-
-                    }
-
-                    if (vision.isInVision == false) 
-                    {
-                        anim.SetFloat("RageEngaged", 0);
-                        _currentState = GoblinState.OntheLookOut;
-
-                    }
-
-                    break;
-                
-                }
+            
 
             
 
@@ -353,8 +308,7 @@ public enum GoblinState
 { 
     OntheLookOut,
     Scanning,
-    Chasing,
-    Charging,
+    Chasing,    
     Attacking,
     ThrowingSpear
 
