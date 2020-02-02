@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour , Idamageable
+public class CharacterController : MonoBehaviour, Idamageable
 {
     private float currentSpeed;
     public float Speed;
@@ -10,15 +10,20 @@ public class CharacterController : MonoBehaviour , Idamageable
     public float jumpForce;
     public float distanceToGround;
     bool isRunning = false;
-    public Animator anim;    
+    public Animator anim;
     LayerMask walkable;
     Rigidbody rb;
     public float totalHealth;
     private float damagedHealth;
     [SerializeField] private float currentHealth;
-   
 
-    public float dashPower;
+    [SerializeField] private float currentStamina;
+    public float StartingStamina;
+    private float expendedStamina;
+    public float staminaDecreaseRate;
+  
+
+   
    
 
     // Start is called before the first frame update
@@ -30,6 +35,7 @@ public class CharacterController : MonoBehaviour , Idamageable
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;
         currentSpeed = Speed;
+        currentStamina = StartingStamina;
      
     }
 
@@ -85,11 +91,18 @@ public class CharacterController : MonoBehaviour , Idamageable
         if (Input.GetKey(KeyCode.LeftShift))
         {
             currentSpeed = Speed + additionalSpeed;
+            expendedStamina = currentStamina - (staminaDecreaseRate * Time.deltaTime);
+            currentStamina = expendedStamina;
 
         }
         else 
         {
             currentSpeed = Speed;
+            if (currentStamina < StartingStamina) 
+            {
+                currentStamina += staminaDecreaseRate * Time.deltaTime;
+            
+            }
         
         }
 

@@ -515,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.45
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 4461164902581218, guid: d6ceaff98a495da47be52a14811cf708, type: 3}
       propertyPath: m_LocalPosition.z
@@ -579,11 +579,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
+  additionalSpeed: 3
   jumpForce: 5
   distanceToGround: 10
   anim: {fileID: 1567312995}
   totalHealth: 100
   currentHealth: 0
+  currentStamina: 0
+  StartingStamina: 100
+  staminaDecreaseRate: 5
 --- !u!95 &1567312995 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 95151759184272236, guid: d6ceaff98a495da47be52a14811cf708,
