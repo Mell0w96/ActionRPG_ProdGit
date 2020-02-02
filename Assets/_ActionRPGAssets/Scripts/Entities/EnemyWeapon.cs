@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour , IdamageDealer
 {
-    public CharacterController player;
-    public float damageAmmount; 
+    private CharacterController player;
+    public float damageAmmount;
+
+    private void Start()
+    {
+        player = CharacterController.FindObjectOfType <CharacterController>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {

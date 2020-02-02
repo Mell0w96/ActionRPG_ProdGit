@@ -8,7 +8,16 @@ public class Spear : MonoBehaviour
     private float spearLifeTime = 20f;
     private float timer = 0;
 
-   
+    private GameObject player;
+
+    private void Start()
+    {
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -22,6 +31,15 @@ public class Spear : MonoBehaviour
         }
         else {
             timer += Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player") 
+        {
+            Destroy(this.gameObject);
+        
         }
     }
 }
