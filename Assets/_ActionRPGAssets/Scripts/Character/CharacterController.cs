@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour, Idamageable
 {
@@ -107,7 +108,12 @@ public class CharacterController : MonoBehaviour, Idamageable
         }
 
 
+        if (currentHealth <= 0) 
+        {
+            Scene thisScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(thisScene.name);
 
+        }
 
     }
 
