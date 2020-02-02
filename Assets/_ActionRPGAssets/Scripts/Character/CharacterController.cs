@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour , Idamageable
 {
+    private float currentSpeed;
     public float Speed;
+    public float additionalSpeed;
     public float jumpForce;
     public float distanceToGround;
     bool isRunning = false;
@@ -16,6 +18,9 @@ public class CharacterController : MonoBehaviour , Idamageable
     [SerializeField] private float currentHealth;
    
 
+    public float dashPower;
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,21 +29,26 @@ public class CharacterController : MonoBehaviour , Idamageable
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;
+        currentSpeed = Speed;
      
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
+    
 
         // draw raycast going down
         Debug.Log(Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable));
         Debug.DrawRay(this.transform.position, -Vector3.up, Color.red, distanceToGround);
 
 
-        Vector3 playerMoveVector = new Vector3(horizontal, 0, vertical).normalized * Speed * Time.deltaTime;
+        Vector3 playerMoveVector = new Vector3(horizontal, 0, vertical).normalized * currentSpeed * Time.deltaTime;
         
         transform.Translate(playerMoveVector, Space.Self);
 
@@ -72,8 +82,19 @@ public class CharacterController : MonoBehaviour , Idamageable
             }
         }
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = Speed + additionalSpeed;
 
-       
+        }
+        else 
+        {
+            currentSpeed = Speed;
+        
+        }
+
+
+
 
     }
 
