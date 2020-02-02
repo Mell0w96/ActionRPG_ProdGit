@@ -387,6 +387,39 @@ MonoBehaviour:
   rotationSpeed: 4
   Target: {fileID: 390619026}
   Player: {fileID: 1567312996}
+--- !u!1 &1168960801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6649168064722737633, guid: c169f129b00e80141916e18987f4a6a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1974654118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1168960803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168960801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83cd4da79a77ca44949a89082db9855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1567312994}
+  damageAmmount: 10
+--- !u!135 &1168960804
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168960801}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.17
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1243748770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -783,7 +816,7 @@ PrefabInstance:
     - target: {fileID: 6648646856634304335, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6651164809508711235, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
