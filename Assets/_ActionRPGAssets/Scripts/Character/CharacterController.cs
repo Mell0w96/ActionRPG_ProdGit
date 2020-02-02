@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterController : MonoBehaviour , Idamageable
 {
     public float Speed;
     public float jumpForce;
@@ -11,6 +11,9 @@ public class CharacterMovement : MonoBehaviour
     public Animator anim;    
     LayerMask walkable;
     Rigidbody rb;
+    public float totalHealth;
+    private float damagedHealth;
+    [SerializeField] private float currentHealth;
    
 
     // Start is called before the first frame update
@@ -20,6 +23,7 @@ public class CharacterMovement : MonoBehaviour
         anim = this.gameObject.GetComponent<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
+        currentHealth = totalHealth;
      
     }
 
@@ -67,8 +71,8 @@ public class CharacterMovement : MonoBehaviour
                
             }
         }
-        
-       
+
+
        
 
     }
@@ -77,5 +81,17 @@ public class CharacterMovement : MonoBehaviour
     {
       return Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable);
     }
+
+    public void TakeDamage(float damageAmmount) 
+    {
+
+        
+        damagedHealth = currentHealth - damageAmmount;
+        currentHealth = damagedHealth;
+        print("CURRENT HEALTH" + currentHealth);
+
+    }
+
     
+
 }
