@@ -31,13 +31,14 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
     // Stalking variables
     public GameObject player;
-    public float minChasingRange;
-    public float maxChasingRange;
+    
+    public float chasingRange;
+    public float maximumChasingRange;
 
     // EngagingPlayer Variables  
-    Vector3 teleportDistance;
-    public float dissengageTimer;
+    Vector3 teleportDistance;   
     float currentTimer;
+    public float dissengageTimer;
     public float attackRate;
     float currentAttackRate;    
     public float appearBehindPlayerDistance;
@@ -47,9 +48,10 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     //RunningAway variables  
     public float runAwaySpeed;
     float playerTooClose = 2f;
+    public float runAwayDistance;
 
-    
- 
+
+
 
 
 
@@ -69,8 +71,10 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
     private void Update()
     {
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
         switch (_currentState) 
         {
+
             case SkeletonState.Scouting: 
                 {
                     agent.speed = movementSpeed;
@@ -106,9 +110,9 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
                     // calculate distance from player
 
-                    float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+                   
 
-                    if (playerDistance > minChasingRange && playerDistance < maxChasingRange)
+                    if (playerDistance < chasingRange)
                     {
                         print("COME HERE");
                         _currentState = SkeletonState.Engaging;
@@ -116,69 +120,109 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                         
                     }
 
+                    if (!playerInbound) 
+                    {
+                        _currentState = SkeletonState.Scouting;
+                    
+                    }
+
                     break;
                 }
             case SkeletonState.Engaging:
                 {
+                    print("ENGAGING");
                     stateOfVision.material = visible;
                     anim.SetInteger("AnimationValue", 1);
                     agent.speed = movementSpeed * movementSpeedX;
                     agent.SetDestination(player.transform.position);
-                    float playerDistance = Vector3.Distance(transform.position, player.transform.position);
-                    Vector3 distanceBehindPlayer = new Vector3(1, 0, 1);
                     
-
-                   // if (playerDistance > appearBehindPlayerDistance)
-                    //{
-                    //    transform.position = player.transform.position - distanceBehindPlayer;
-                    //    agent.SetDestination(player.transform.position);
-                    //}
-
-
+                    
                     if (playerDistance < attackRange)
                     {
                         _currentState = SkeletonState.Attacking;
-                       
-
+                        currentAttackRate = 0;
                     }
+
+                    if (playerDistance > maximumChasingRange) 
+                    {
+                        _currentState = SkeletonState.Scouting;
+                    
+                    }
+
+                    if (dissengageTimer > 0)
+                    {
+                        dissengageTimer -= Time.deltaTime;
+                    }
+                    else 
+                    {
+                        _currentState = SkeletonState.RunningAway;                    
+                    }
+
+
                    
                     break;
                 }
             case SkeletonState.Attacking: 
                 {
-                    currentAttackRate = attackRate;
-                    if (currentAttackRate <= 0)
-                    {                        
+                    print("ATTACKING");
+                    print("Attacking" + currentAttackRate);
+                    if (currentAttackRate > 0)
+                    {
+
+                        currentAttackRate -= Time.deltaTime;
+                        agent.SetDestination(player.transform.position);
+
+                    }
+                    else
+                    {
                         currentAttackRate = attackRate;
                         anim.SetInteger("AnimationValue", 2);
                     }
 
-                    if (currentAttackRate > 0)
+                    if (playerDistance > attackRange) 
                     {
-                        anim.SetInteger("AnimationValue", 1);
-                        currentAttackRate -= Time.deltaTime;
+                        _currentState = SkeletonState.Engaging;
                         agent.SetDestination(player.transform.position);
+
                     }
-                    break; 
+
+
+                        break; 
                 }
-            case SkeletonState.Assisting:
+            case SkeletonState.RunningAway: 
                 {
+                    print("RUNNING AWAY");
+                    agent.speed = runAwaySpeed;
+                    stateOfVision.material = invisible;
+                    // calculate distance from player
+                    float DistanceFromPlayer = Vector3.Distance(transform.position, Player.position);
+                    // player to enemy vector
+                    Vector3 FromToPlayer = transform.position - Player.position;
+                    // add the previous vector to the position of the thief
+                    Vector3 runDirection = transform.position + FromToPlayer;
+
+                    // set destination to the new vector
+                    agent.SetDestination(runDirection);
+
+
+                    if (playerDistance >= runAwayDistance) 
+                    {
+                        _currentState = SkeletonState.Scouting;
+                    
+                    }
+
                     break;
-
-
-
+                
                 }
-            case SkeletonState.RunningAway:
-                {
-                    break;
 
-
-
-                }
+             
+            
+                
 
 
 
         }
+        print("DISSENGAME TIMER" + dissengageTimer);
     }
     public void WaitingSkeletonCooldown() 
     {
@@ -187,6 +231,15 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerInbound = true;
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
