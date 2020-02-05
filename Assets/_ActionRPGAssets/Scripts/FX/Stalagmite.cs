@@ -26,8 +26,18 @@ public class Stalagmite : FXMesh
     void Update()
     {
         timeActive += Time.deltaTime;
-        //if (timeActive / growthSpeedInSeconds <= 1) {
-            myTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * scale, timeActive / growthSpeedInSeconds);
-        //}
+        
+        myTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * scale, timeActive / growthSpeedInSeconds);
+        
+
+        if(timeActive>= deathTimeInSeconds)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+
     }
 }
