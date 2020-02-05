@@ -7,13 +7,15 @@ public class FXMesh : MonoBehaviour
 
     MeshCollider myMeshCollider;
     MeshFilter myMeshFilter;
+  
     public Mesh[] PossibleMeshes;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         myMeshCollider = this.GetComponent<MeshCollider>();
         myMeshFilter = this.GetComponent<MeshFilter>();
+        
 
         Mesh CurrentMesh = PossibleMeshes[Mathf.FloorToInt(Random.Range(0,PossibleMeshes.Length))];
 
