@@ -41,8 +41,8 @@ public class Stalagmite : FXMesh
     public void Die()
     {
         if(DestroyEffect != null){
-            GameObject.Instantiate(DestroyEffect,myTransform.position,Quaternion.identity);
+            GameObject.Instantiate(DestroyEffect,myTransform.position + Vector3.up * Random.Range(0,1),Quaternion.identity);
         }
-        Destroy(this.gameObject,0.1f);
+        Destroy(this.gameObject,0f);
     }
 }
