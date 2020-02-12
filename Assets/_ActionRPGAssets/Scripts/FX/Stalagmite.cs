@@ -15,6 +15,8 @@ public class Stalagmite : FXMesh
 
     float timeActive;
 
+    public GameObject DestroyEffect;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -38,6 +40,9 @@ public class Stalagmite : FXMesh
 
     public void Die()
     {
-
+        if(DestroyEffect != null){
+            GameObject.Instantiate(DestroyEffect,myTransform.position,Quaternion.identity);
+        }
+        Destroy(this.gameObject,0.1f);
     }
 }
