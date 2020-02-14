@@ -5,28 +5,59 @@ using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour, Idamageable
 {
+    #region Variables
+    [Header ("Speed Settings")]
+
+    [SerializeField]
     private float currentSpeed;
-    public float Speed;
-    public float additionalSpeed;
-    public float jumpForce;
-    public float distanceToGround;
-    bool isRunning = false;
-    public Animator anim;
-    LayerMask walkable;
-    Rigidbody rb;
-    public float totalHealth;
+    [SerializeField]
+    private float acceleration;
+    [SerializeField]
+    private float timeToMaxSpeed = 1f;
+    [SerializeField]
+    private float maxSpeed = 6f;
+    [SerializeField]
+    private float strafeSpeed = 4f;
+    [SerializeField]
+    private float additionalSpeed = 2f;
+
+
+    [Header ("Jump Settings")]
+
+    [SerializeField]
+    private float jumpForce;
+    [SerializeField]
+    private float distanceToGround = 1f;
+    bool playerGrounded = true;
+
+    [Header ("Health Settings")]
+
+    [SerializeField]
+    private float totalHealth = 100f;
+    [SerializeField]
     private float damagedHealth;
-    [SerializeField] private float currentHealth;
-
-    [SerializeField] private float currentStamina;
-    public float StartingStamina;
+    [SerializeField]
+    private float currentHealth;
+    [SerializeField]
+    private float currentStamina;
+    [SerializeField]
+    private float StartingStamina = 100f;
+    [SerializeField]
     private float expendedStamina;
-    public float staminaDecreaseRate;
-  
+    [SerializeField]
+    private float staminaDecreaseRate = 5f;
+    
+    [Header ("Other Settings")]
 
-   
-   
+    [SerializeField]
+    private Animator anim;
+    [SerializeField]
+    private Rigidbody rb;    
+    public LayerMask walkable;
 
+    #endregion
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,35 +65,42 @@ public class CharacterController : MonoBehaviour, Idamageable
         anim = this.gameObject.GetComponent<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
-        currentHealth = totalHealth;
-        currentSpeed = Speed;
+        currentHealth = totalHealth;        
         currentStamina = StartingStamina;
-     
+        
+
+        acceleration = maxSpeed / timeToMaxSpeed;
+        currentSpeed = 0f;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-    
-
-        // draw raycast going down
-        Debug.Log(Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable));
+        RaycastHit hit;    
+        // draw raycast going down       
         Debug.DrawRay(this.transform.position, -Vector3.up, Color.red, distanceToGround);
 
-
-        Vector3 playerMoveVector = new Vector3(horizontal, 0, vertical).normalized * currentSpeed * Time.deltaTime;
-        
-        transform.Translate(playerMoveVector, Space.Self);
-
-        if (isRunning == false)
+        if (Physics.Raycast(this.transform.position, -Vector3.up, out hit, distanceToGround, walkable))
         {
+            print("HIT SOMETHING");
+            playerGrounded = true;
+        }
+        else
+        {
+            playerGrounded = false;
+        }
+
+
+     
+
+        
+
+       /* if (isRunning == false)
+        {
+            currentSpeed = 0;
             if (Input.GetButton("Horizontal") == true || Input.GetButton("Vertical") == true)
-            {             
+            {
+                currentSpeed = maxSpeed; 
                 isRunning = true;
                 anim.SetBool("isRunning", true);
             }
@@ -72,40 +110,48 @@ public class CharacterController : MonoBehaviour, Idamageable
         {
             if (horizontal == 0 && vertical == 0)
             {
+                currentSpeed = 0;
                 isRunning = false;
                 anim.SetBool("isRunning", false);
             }
         }
+        */
 
-
-        if (!NotGrounded())
+        if (playerGrounded)
         {
-           anim.SetBool("isGrounded", true);
-            if (Input.GetButton("Jump"))
+            
+            anim.SetBool("isGrounded", true);
+            if (Input.GetButtonDown("Jump"))
             {
-                anim.SetBool("isGrounded", false);
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-               
+                anim.SetBool("isGrounded", false);                
+                playerGrounded = false;
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        
+
+        
+        
+
+
+        /*if (Input.GetKey(KeyCode.LeftShift))
         {
-            currentSpeed = Speed + additionalSpeed;
+            currentSpeed = maxSpeed + additionalSpeed;
             expendedStamina = currentStamina - (staminaDecreaseRate * Time.deltaTime);
             currentStamina = expendedStamina;
 
         }
         else 
         {
-            currentSpeed = Speed;
+            currentSpeed = maxSpeed;
             if (currentStamina < StartingStamina) 
             {
                 currentStamina += staminaDecreaseRate * Time.deltaTime;
             
             }
         
-        }
+        }*/
+
 
 
         if (currentHealth <= 0) 
@@ -115,13 +161,11 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
+        print(playerGrounded);
+
     }
 
-    bool NotGrounded()
-    {
-      return Physics.Raycast(this.transform.position, -Vector3.up, distanceToGround, walkable);
-    }
-
+   
     public void TakeDamage(float damageAmmount) 
     {
 
