@@ -6,29 +6,43 @@ using UnityEngine.SceneManagement;
 public class CharacterController : MonoBehaviour, Idamageable
 {
     #region Variables
-    [Header ("Speed Settings")]
+    [Header("Speed Settings")]
 
     [SerializeField]
     private float currentSpeed;
     [SerializeField]
     private float acceleration;
     [SerializeField]
-    private float timeToMaxSpeed = 1f;
+    private float deceleration;
     [SerializeField]
-    private float maxSpeed = 6f;
+    private float timeToMaxSpeed;
     [SerializeField]
-    private float strafeSpeed = 4f;
+    private float timeToZero;
+
+    private bool isSprinting = false;
+    private bool ableToSprint;
+    private float sprintTimer;
+    private float sprintCooldownTime = 3;
+
     [SerializeField]
-    private float additionalSpeed = 2f;
+    private float MaxSpeed;
+    [SerializeField]
+    private float strafeSpeed;
+    [SerializeField]
+    private float sprintMultiplier;
 
 
-    [Header ("Jump Settings")]
+    [Header("Jump Settings")]
 
     [SerializeField]
     private float jumpForce;
     [SerializeField]
-    private float distanceToGround = 1f;
-    bool playerGrounded = true;
+    public float distanceToGround = 1f;
+    [SerializeField]
+    private float fallMulti;
+    [SerializeField]
+    private float airMovementSpeed;
+    public bool playerGrounded = true;
 
     [Header ("Health Settings")]
 
@@ -43,9 +57,11 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private float StartingStamina = 100f;
     [SerializeField]
-    private float expendedStamina;
+    private float staminaDecreaseRate;
     [SerializeField]
-    private float staminaDecreaseRate = 5f;
+    private float staminaIncreaseRate;
+    private float expendedStamina;
+    
     
     [Header ("Other Settings")]
 
@@ -62,97 +78,149 @@ public class CharacterController : MonoBehaviour, Idamageable
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = this.gameObject.GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
+
+        sprintTimer = 0f; 
         
 
-        acceleration = maxSpeed / timeToMaxSpeed;
-        currentSpeed = 0f;
+        acceleration = MaxSpeed / timeToMaxSpeed;
+        deceleration = -MaxSpeed / timeToZero;
+
+        currentSpeed = 0;
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        RaycastHit hit;    
-        // draw raycast going down       
-        Debug.DrawRay(this.transform.position, -Vector3.up, Color.red, distanceToGround);
-
-        if (Physics.Raycast(this.transform.position, -Vector3.up, out hit, distanceToGround, walkable))
+    { 
+        if (sprintTimer <= 0)
         {
-            print("HIT SOMETHING");
-            playerGrounded = true;
+            ableToSprint = true;
+
         }
         else
         {
-            playerGrounded = false;
-        }
-
-
-     
-
+            sprintTimer -= Time.fixedDeltaTime;
+            ableToSprint = false;
         
-
-       /* if (isRunning == false)
-        {
-            currentSpeed = 0;
-            if (Input.GetButton("Horizontal") == true || Input.GetButton("Vertical") == true)
-            {
-                currentSpeed = maxSpeed; 
-                isRunning = true;
-                anim.SetBool("isRunning", true);
-            }
         }
 
-        if (isRunning == true)
-        {
-            if (horizontal == 0 && vertical == 0)
-            {
-                currentSpeed = 0;
-                isRunning = false;
-                anim.SetBool("isRunning", false);
-            }
-        }
-        */
 
-        if (playerGrounded)
+        var x = Input.GetAxis("Horizontal");
+        var y = Input.GetAxis("Vertical");
+
+
+
+        Vector3 movementVector = new Vector3(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
+
+        // If any input is selected, then set current speed to acceleration and apply the movement vector to the 
+        if (playerGrounded == true)
         {
+            anim.SetFloat("PlayerX", x * 0.5f);
+            anim.SetFloat("PlayerY", y * 0.5f);
+
             
+
             anim.SetBool("isGrounded", true);
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
             {
-                anim.SetBool("isGrounded", false);                
+
+                isSprinting = false;
+                currentSpeed += acceleration * Time.fixedDeltaTime;
+                currentSpeed = Mathf.Min(currentSpeed, MaxSpeed);
+
+                rb.velocity = movementVector;
+                //rb.AddRelativeForce(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
+
+                if (Input.GetButton("Sprint") && Input.GetAxis("Vertical") > 0 && ableToSprint)
+                {
+                    if (currentStamina > 0)
+                    {
+                        isSprinting = true;
+                        expendedStamina = currentStamina - staminaDecreaseRate * Time.fixedDeltaTime;
+                        currentSpeed = MaxSpeed * sprintMultiplier;
+                        anim.SetFloat("PlayerY", y);
+                        if (Input.GetButton("Horizontal"))
+                        {
+                            anim.SetFloat("PlayerX", x);
+                        }
+
+                        currentStamina = expendedStamina;
+                    }
+
+                }
+
+
+
+            }
+
+            else if (Input.GetAxis("Vertical") == 0 && currentSpeed > 0 || Input.GetAxis("Horizontal") == 0 && currentSpeed > 0)
+            {
+                currentSpeed += deceleration * Time.fixedDeltaTime;
+                currentSpeed = Mathf.Max(currentSpeed, 0f);
+            }
+
+
+        }
+
+       
+       
+       
+
+        
+
+
+        if (isSprinting == false && currentStamina < StartingStamina) 
+        {
+
+            currentStamina += staminaIncreaseRate * Time.fixedDeltaTime;           
+        
+        }
+
+        if (currentStamina <= 0) 
+        {
+            sprintTimer = sprintCooldownTime;
+        
+        }
+
+
+
+
+        print("SPRINT TIMER" + sprintTimer);
+        print("SPRINTING" + isSprinting);
+        print("ABLE TO SPRINT" + ableToSprint);
+
+
+        if (playerGrounded == true) 
+        {
+            if (Input.GetButton("Jump"))
+            {
                 playerGrounded = false;
+                anim.SetBool("isGrounded", false);
+                //rb.velocity = Vector3.up * jumpForce;
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                
+                currentSpeed = airMovementSpeed;
+                if (Input.GetButton("Vertical") || Input.GetButton("Horizontal")) 
+                {
+                    rb.velocity = movementVector;
+                }
+                    
+                
+                
             }
+
         }
 
-        
-
-        
-        
-
-
-        /*if (Input.GetKey(KeyCode.LeftShift))
+        if (rb.velocity.y < 0) 
         {
-            currentSpeed = maxSpeed + additionalSpeed;
-            expendedStamina = currentStamina - (staminaDecreaseRate * Time.deltaTime);
-            currentStamina = expendedStamina;
-
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMulti - 1) * Time.fixedDeltaTime;
+        
         }
-        else 
-        {
-            currentSpeed = maxSpeed;
-            if (currentStamina < StartingStamina) 
-            {
-                currentStamina += staminaDecreaseRate * Time.deltaTime;
-            
-            }
-        
-        }*/
-
-
 
         if (currentHealth <= 0) 
         {
@@ -161,7 +229,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
-        print(playerGrounded);
+        print("GROUNDED" + playerGrounded);
 
     }
 
