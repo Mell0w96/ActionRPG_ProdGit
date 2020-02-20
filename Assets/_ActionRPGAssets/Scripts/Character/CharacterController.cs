@@ -33,9 +33,11 @@ public class CharacterController : MonoBehaviour, Idamageable
 
 
     [Header("Jump Settings")]
-
+    
     [SerializeField]
     private float jumpForce;
+    [SerializeField]
+    private float sprintJumpForce;
     [SerializeField]
     public float distanceToGround = 1f;
     [SerializeField]
@@ -43,6 +45,7 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private float airMovementSpeed;
     public bool playerGrounded = true;
+    private float currentJumpForce;
 
     [Header ("Health Settings")]
 
@@ -70,6 +73,8 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private Rigidbody rb;    
     public LayerMask walkable;
+   
+    public bool ObjectInRadius;
 
     #endregion
 
@@ -83,9 +88,10 @@ public class CharacterController : MonoBehaviour, Idamageable
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
-
-        sprintTimer = 0f; 
         
+
+        sprintTimer = 0f;
+        currentJumpForce = jumpForce;
 
         acceleration = MaxSpeed / timeToMaxSpeed;
         deceleration = -MaxSpeed / timeToZero;
@@ -97,6 +103,8 @@ public class CharacterController : MonoBehaviour, Idamageable
     // Update is called once per frame
     void FixedUpdate()
     { 
+
+        //regulates sptinting. A timer starts when stamina reaches 0. Player can only sprint again once timer is up.
         if (sprintTimer <= 0)
         {
             ableToSprint = true;
@@ -117,14 +125,14 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         Vector3 movementVector = new Vector3(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
 
-        // If any input is selected, then set current speed to acceleration and apply the movement vector to the 
+        // If any input is selected, then set current speed to acceleration and apply the movement vector to the rigid body velocity
         if (playerGrounded == true)
         {
             anim.SetFloat("PlayerX", x * 0.5f);
             anim.SetFloat("PlayerY", y * 0.5f);
 
             
-
+            
             anim.SetBool("isGrounded", true);
             if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
             {
@@ -136,6 +144,7 @@ public class CharacterController : MonoBehaviour, Idamageable
                 rb.velocity = movementVector;
                 //rb.AddRelativeForce(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
 
+                // if the sprint button is pressed then change speed and animation as well as currentJumpForce and also decrease stamina
                 if (Input.GetButton("Sprint") && Input.GetAxis("Vertical") > 0 && ableToSprint)
                 {
                     if (currentStamina > 0)
@@ -143,6 +152,7 @@ public class CharacterController : MonoBehaviour, Idamageable
                         isSprinting = true;
                         expendedStamina = currentStamina - staminaDecreaseRate * Time.fixedDeltaTime;
                         currentSpeed = MaxSpeed * sprintMultiplier;
+                        currentJumpForce = sprintJumpForce;
                         anim.SetFloat("PlayerY", y);
                         if (Input.GetButton("Horizontal"))
                         {
@@ -153,11 +163,16 @@ public class CharacterController : MonoBehaviour, Idamageable
                     }
 
                 }
+                else
+                {
+                    currentJumpForce = jumpForce;
+                }
 
 
 
             }
 
+            //if player lets go of an input but is still moving, decelerate
             else if (Input.GetAxis("Vertical") == 0 && currentSpeed > 0 || Input.GetAxis("Horizontal") == 0 && currentSpeed > 0)
             {
                 currentSpeed += deceleration * Time.fixedDeltaTime;
@@ -173,7 +188,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         
 
-
+        // regerate stamina when no sprinting
         if (isSprinting == false && currentStamina < StartingStamina) 
         {
 
@@ -194,7 +209,7 @@ public class CharacterController : MonoBehaviour, Idamageable
         print("SPRINTING" + isSprinting);
         print("ABLE TO SPRINT" + ableToSprint);
 
-
+        // Jump when pressing space
         if (playerGrounded == true) 
         {
             if (Input.GetButton("Jump"))
@@ -202,9 +217,9 @@ public class CharacterController : MonoBehaviour, Idamageable
                 playerGrounded = false;
                 anim.SetBool("isGrounded", false);
                 //rb.velocity = Vector3.up * jumpForce;
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
                 
-                currentSpeed = airMovementSpeed;
+                //currentSpeed = airMovementSpeed;
                 if (Input.GetButton("Vertical") || Input.GetButton("Horizontal")) 
                 {
                     rb.velocity = movementVector;
@@ -216,12 +231,14 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
+        // quick fall
         if (rb.velocity.y < 0) 
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMulti - 1) * Time.fixedDeltaTime;
         
         }
 
+        // when health reaches 0 restart scene
         if (currentHealth <= 0) 
         {
             Scene thisScene = SceneManager.GetActiveScene();
@@ -233,7 +250,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
     }
 
-   
+   // take damage when enemy hits player
     public void TakeDamage(float damageAmmount) 
     {
 
@@ -244,6 +261,12 @@ public class CharacterController : MonoBehaviour, Idamageable
 
     }
 
-    
+    #region InteractableBehavior
+
+
+
+    #endregion
+
+
 
 }
