@@ -553,7 +553,7 @@ PrefabInstance:
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 4.84
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
@@ -568,22 +568,22 @@ PrefabInstance:
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.056201648
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.6114095
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.043600764
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.78811085
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
@@ -593,12 +593,12 @@ PrefabInstance:
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -8.158
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -75.608
       objectReference: {fileID: 0}
     - target: {fileID: 1949298791393807806, guid: a9eecc1bcad5630458ed4e3df4209546,
         type: 3}
@@ -614,6 +614,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CastShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637905065956426170, guid: a9eecc1bcad5630458ed4e3df4209546,
+        type: 3}
+      propertyPath: MoveSpeedPerSecond
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968164004990182095, guid: a9eecc1bcad5630458ed4e3df4209546,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9eecc1bcad5630458ed4e3df4209546, type: 3}
