@@ -25,9 +25,7 @@ public class CharacterController : MonoBehaviour, Idamageable
     private float sprintCooldownTime = 3;
 
     [SerializeField]
-    private float MaxSpeed;
-    [SerializeField]
-    private float strafeSpeed;
+    private float MaxSpeed;    
     [SerializeField]
     private float sprintMultiplier;
 
@@ -73,8 +71,9 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private Rigidbody rb;    
     public LayerMask walkable;
-   
-    public bool ObjectInRadius;
+
+    public Interactables item;
+    public bool canPickUp;
 
     #endregion
 

@@ -14,7 +14,7 @@ public class CheckingForInteractables : MonoBehaviour
     {
         if (other.gameObject == FindObjectOfType<Interactables>())
         {
-            Player.ObjectInRadius = true;            
+            Player.item = other.gameObject.GetComponent<Interactables>();            
         }
     }
 }

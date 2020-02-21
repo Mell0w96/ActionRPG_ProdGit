@@ -614,10 +614,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 956340378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f173f11f3aa2d514ea71b4e7c20fff2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 381ec5603b10ce1468c0978ddbd9b04c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 0
+  interactionRadius: 2
+  Player: {fileID: 0}
 --- !u!135 &956340380
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1307,6 +1308,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037974256020949073, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247870441001431760, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.28
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81f3a9f773099694d8a5907c5e8dcfe0, type: 3}
