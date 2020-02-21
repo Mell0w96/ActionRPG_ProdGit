@@ -12,9 +12,14 @@ public class CheckingForInteractables : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == FindObjectOfType<Interactables>())
+        if (other.gameObject.tag == "Interactable")
         {
-            Player.item = other.gameObject.GetComponent<Interactables>();            
+
+            print("OBJECT FOUND");
+            Player.interactable = other.gameObject.GetComponent<Interactable>();
+                //other.gameObject.GetComponent<Interactables>();        
         }
     }
+
+    
 }

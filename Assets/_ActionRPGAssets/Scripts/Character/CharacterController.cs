@@ -71,9 +71,14 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private Rigidbody rb;    
     public LayerMask walkable;
-
-    public Interactables item;
+    [SerializeField]
+    public Interactable interactable;    
     public bool canPickUp;
+    Camera camera;
+    public LayerMask interactions;
+    public float SearchRadius;
+    
+
 
     #endregion
 
@@ -87,6 +92,8 @@ public class CharacterController : MonoBehaviour, Idamageable
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
+
+        camera = Camera.main;
         
 
         sprintTimer = 0f;
@@ -97,6 +104,23 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         currentSpeed = 0;
         
+    }
+
+    void Update()
+    {
+        #region InteractableBehavior       
+
+        
+
+        
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+             Debug.Log("ITEM ADDED");
+             CheckForInteractables(SearchRadius, interactions);
+            }
+     
+
+        #endregion
     }
 
     // Update is called once per frame
@@ -116,13 +140,19 @@ public class CharacterController : MonoBehaviour, Idamageable
         
         }
 
+       // rb.rotation = Quaternion.Euler(rb.rotation.eulerAngles + camera.transform.up);
+
+        
 
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
 
 
 
-        Vector3 movementVector = new Vector3(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
+
+
+        Vector3 movementVector = this.transform.right * (x * currentSpeed * Time.fixedDeltaTime) + this.transform.forward * (y * currentSpeed * Time.fixedDeltaTime);
+       
 
         // If any input is selected, then set current speed to acceleration and apply the movement vector to the rigid body velocity
         if (playerGrounded == true)
@@ -179,9 +209,14 @@ public class CharacterController : MonoBehaviour, Idamageable
             }
 
 
+            
+
+            
+
+
         }
 
-       
+
        
        
 
@@ -204,9 +239,9 @@ public class CharacterController : MonoBehaviour, Idamageable
 
 
 
-        print("SPRINT TIMER" + sprintTimer);
-        print("SPRINTING" + isSprinting);
-        print("ABLE TO SPRINT" + ableToSprint);
+      //  print("SPRINT TIMER" + sprintTimer);
+       // print("SPRINTING" + isSprinting);
+      //  print("ABLE TO SPRINT" + ableToSprint);
 
         // Jump when pressing space
         if (playerGrounded == true) 
@@ -245,7 +280,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
-        print("GROUNDED" + playerGrounded);
+        //print("GROUNDED" + playerGrounded);
 
     }
 
@@ -256,16 +291,32 @@ public class CharacterController : MonoBehaviour, Idamageable
         
         damagedHealth = currentHealth - damageAmmount;
         currentHealth = damagedHealth;
-        print("CURRENT HEALTH" + currentHealth);
+       // print("CURRENT HEALTH" + currentHealth);
 
     }
 
-    #region InteractableBehavior
+    void CheckForInteractables(float _range, LayerMask _layermask)
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.SphereCastAll(this.transform.position, _range, Vector3.forward, 0.01f, _layermask);
+        Debug.Log(hits.Length);
+
+        for (int _i = 0; _i < hits.Length; _i++)
+        {
+            Interactable interactComponent = hits[_i].rigidbody.gameObject.GetComponent<Interactable>();
+
+            if (interactComponent != null)
+            {
+                interactComponent.Interact();
+            }
+            else
+            {
+                //Debug.LogWarning("NOPE");
+            }
+        }
+    }
 
 
 
-    #endregion
-
-
-
-}
+ }

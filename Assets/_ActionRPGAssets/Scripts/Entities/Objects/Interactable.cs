@@ -1,16 +1,23 @@
 ﻿
 using UnityEngine;
 
-public class Interactables : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     public float interactionRadius;
     [SerializeField]
     CharacterController Player;
+    
 
 
     private void Start()
     {
         Player = FindObjectOfType<CharacterController>();
+    }
+
+
+    public virtual void Interact()
+    {
+
     }
 
     private void OnDrawGizmosSelected()
@@ -34,8 +41,8 @@ public class Interactables : MonoBehaviour
         
         }
 
-        print("distanceFromPlayer" + distanceFromPlayer);
-        print("Can pick up" + Player.canPickUp);
+       
+       // print("Can pick up" + Player.canPickUp);
     }
 
 

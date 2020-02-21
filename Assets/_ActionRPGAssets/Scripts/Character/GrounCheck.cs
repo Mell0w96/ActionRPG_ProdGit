@@ -21,7 +21,7 @@ public class GrounCheck : MonoBehaviour
 
         if (Physics.Raycast(transform.position, -Vector3.up, out hit, player.distanceToGround, player.walkable))
         {
-            print("HIT SOMETHING");
+            //print("HIT SOMETHING");
             player.playerGrounded = true;
         }
         else
