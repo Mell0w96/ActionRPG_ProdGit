@@ -25,7 +25,9 @@ public class ProjectileMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        moveForward();
+        //transform.Translate(Vector3.forward * MoveSpeedPerSecond * Time.deltaTime);
+
+         moveForward();
     }
 
 

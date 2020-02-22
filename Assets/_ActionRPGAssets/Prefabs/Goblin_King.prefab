@@ -2660,9 +2660,11 @@ GameObject:
   - component: {fileID: 6648008574700462853}
   - component: {fileID: 6648008574700462861}
   - component: {fileID: 6648008574700462330}
+  - component: {fileID: 1706688676}
+  - component: {fileID: 1706688677}
   m_Layer: 0
   m_Name: Goblin_King
-  m_TagString: Ally
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2816,6 +2818,51 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1706688676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648646856634304335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b2e2ee6eb1546408031ce9cb3c5f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FindNewPathTime: 5
+  visionCone: {fileID: 8103002907304286483}
+  _movementSpeed: 1.5
+  speedMultiplier: 1.8
+  player: {fileID: 0}
+  startRateUntilScanning: 10
+  _totalScanTime: 7
+  meleeRange: 2
+  minRangedRange: 10
+  maxRangedRange: 30
+  rageSpeedMultiplier: 3
+  _rageTime: 3
+  _attackRate: 2
+  spearPref: {fileID: 6764250874403623311, guid: 18f8865eebb5cf64b8fded0c50f8ff1a,
+    type: 3}
+  ThrowingPosition: {fileID: 6648008573961684919}
+  _throwingRate: 4
+--- !u!114 &1706688677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648646856634304335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5f69ae6474ae54089014e31c3f9cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OriginalHealth: 200
+  currentHealth: 0
+  healthDrop: {fileID: 5799192135915229011, guid: e73c977748144b34696aa4cb31ad55dd,
+    type: 3}
 --- !u!1 &6648670764863327953
 GameObject:
   m_ObjectHideFlags: 0
@@ -5000,6 +5047,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6650879140865591857}
+  - component: {fileID: 1168960804}
+  - component: {fileID: 1168960803}
   m_Layer: 0
   m_Name: middle_01_r
   m_TagString: Untagged
@@ -5022,6 +5071,32 @@ Transform:
   m_Father: {fileID: 6652557700590716977}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1168960804
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649168064722737633}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.17
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1168960803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649168064722737633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83cd4da79a77ca44949a89082db9855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmmount: 10
 --- !u!1 &6649172323925867385
 GameObject:
   m_ObjectHideFlags: 0
@@ -8666,18 +8741,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 536.12604
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 74e0de6fb91f94a4aa97ac0a90adf7e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 74e0de6fb91f94a4aa97ac0a90adf7e0,
         type: 3}
       propertyPath: m_Name
       value: Vision Cone
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 74e0de6fb91f94a4aa97ac0a90adf7e0,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -1504981713932161579, guid: 74e0de6fb91f94a4aa97ac0a90adf7e0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74e0de6fb91f94a4aa97ac0a90adf7e0, type: 3}
 --- !u!1 &8103002907304286483 stripped
 GameObject:

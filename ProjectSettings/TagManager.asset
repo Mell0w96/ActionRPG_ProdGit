@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ally
   - Interactable
+  - enemy
   layers:
   - Default
   - TransparentFX
