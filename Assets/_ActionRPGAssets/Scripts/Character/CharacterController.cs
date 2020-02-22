@@ -25,13 +25,13 @@ public class CharacterController : MonoBehaviour, Idamageable
     private float sprintCooldownTime = 3;
 
     [SerializeField]
-    private float MaxSpeed;    
+    private float MaxSpeed;
     [SerializeField]
     private float sprintMultiplier;
 
 
     [Header("Jump Settings")]
-    
+
     [SerializeField]
     private float jumpForce;
     [SerializeField]
@@ -45,14 +45,14 @@ public class CharacterController : MonoBehaviour, Idamageable
     public bool playerGrounded = true;
     private float currentJumpForce;
 
-    [Header ("Health Settings")]
+    [Header("Health Settings")]
 
     [SerializeField]
     private float totalHealth = 100f;
     [SerializeField]
     private float damagedHealth;
-    [SerializeField]
-    private float currentHealth;
+   
+    public float currentHealth;
     [SerializeField]
     private float currentStamina;
     [SerializeField]
@@ -62,6 +62,10 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private float staminaIncreaseRate;
     private float expendedStamina;
+
+    [Header("Attack Settings")]
+
+    public bool hasAttacked;
     
     
     [Header ("Other Settings")]
@@ -77,17 +81,19 @@ public class CharacterController : MonoBehaviour, Idamageable
     Camera camera;
     public LayerMask interactions;
     public float SearchRadius;
-    
+
+    public Transform projectilePoint;
+    public GameObject windSlashPrefab;
 
 
     #endregion
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
@@ -103,6 +109,8 @@ public class CharacterController : MonoBehaviour, Idamageable
         deceleration = -MaxSpeed / timeToZero;
 
         currentSpeed = 0;
+
+       
         
     }
 
@@ -118,7 +126,7 @@ public class CharacterController : MonoBehaviour, Idamageable
              Debug.Log("ITEM ADDED");
              CheckForInteractables(SearchRadius, interactions);
             }
-     
+
 
         #endregion
     }
@@ -148,7 +156,7 @@ public class CharacterController : MonoBehaviour, Idamageable
         var y = Input.GetAxis("Vertical");
 
 
-
+       
 
 
         Vector3 movementVector = this.transform.right * (x * currentSpeed * Time.fixedDeltaTime) + this.transform.forward * (y * currentSpeed * Time.fixedDeltaTime);
@@ -159,6 +167,8 @@ public class CharacterController : MonoBehaviour, Idamageable
         {
             anim.SetFloat("PlayerX", x * 0.5f);
             anim.SetFloat("PlayerY", y * 0.5f);
+
+            
 
             
             
@@ -209,6 +219,15 @@ public class CharacterController : MonoBehaviour, Idamageable
             }
 
 
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Attacking();
+               
+            }
+            else
+            {
+                anim.SetInteger("AttackValue", 0);
+            }
             
 
             
@@ -280,7 +299,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
-        //print("GROUNDED" + playerGrounded);
+        
 
     }
 
@@ -312,11 +331,21 @@ public class CharacterController : MonoBehaviour, Idamageable
             }
             else
             {
-                //Debug.LogWarning("NOPE");
+                Debug.LogWarning("NOPE");
             }
         }
     }
 
+    void Attacking()
+    {
+       // anim.SetTrigger("attacking");
+        anim.SetInteger("AttackValue", Random.Range(1,4));
+    }
 
+    public void PerformAbility()
+    {
+        Instantiate(windSlashPrefab, projectilePoint.transform.position, projectilePoint.transform.rotation);
+    }
+    
 
  }

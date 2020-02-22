@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
 
         Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
         Player.rotation = Quaternion.Euler(Player.velocity.x, mouseX, Player.velocity.y);
+        
 
 
 
