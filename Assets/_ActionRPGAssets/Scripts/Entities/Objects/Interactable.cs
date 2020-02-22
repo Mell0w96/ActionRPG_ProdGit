@@ -5,13 +5,13 @@ public abstract class Interactable : MonoBehaviour
 {
     public float interactionRadius;
     [SerializeField]
-    CharacterController Player;
+   // CharacterController Player;
     
 
 
     private void Start()
     {
-        Player = FindObjectOfType<CharacterController>();
+       // Player = FindObjectOfType<CharacterController>();
     }
 
 
@@ -28,18 +28,18 @@ public abstract class Interactable : MonoBehaviour
 
     private void Update()
     {
-        float distanceFromPlayer = Vector3.Distance(transform.position, Player.transform.position);
+       // float distanceFromPlayer = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (distanceFromPlayer <= interactionRadius) 
-        {
-            Player.canPickUp = true;
+       // if (distanceFromPlayer <= interactionRadius) 
+        //{
+         //   Player.canPickUp = true;
         
-        }
-        else 
-        {
-            Player.canPickUp = false;
+       // }
+      //  else 
+       // {
+       //     Player.canPickUp = false;
         
-        }
+       // }
 
        
        // print("Can pick up" + Player.canPickUp);

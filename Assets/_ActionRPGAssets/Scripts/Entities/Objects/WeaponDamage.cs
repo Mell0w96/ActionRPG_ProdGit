@@ -5,19 +5,20 @@ using UnityEngine;
 public class WeaponDamage : MonoBehaviour
 {
     public float weaponDmg;
+    [SerializeField]
     EnemyHealth enemy;
+    
+    
 
-    private void Start()
-    {
-        enemy = FindObjectOfType<EnemyHealth>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "enemy")
         {
+            enemy = other.gameObject.GetComponent<EnemyHealth>();
             DealDamage(weaponDmg);
         }
     }
+   
 
     public void DealDamage(float damageAmmount)
     {

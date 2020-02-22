@@ -75,10 +75,9 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private Rigidbody rb;    
     public LayerMask walkable;
-    [SerializeField]
-    public Interactable interactable;    
+    
     public bool canPickUp;
-    Camera camera;
+    //Camera camera;
     public LayerMask interactions;
     public float SearchRadius;
 
@@ -99,7 +98,7 @@ public class CharacterController : MonoBehaviour, Idamageable
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
 
-        camera = Camera.main;
+       // camera = Camera.main;
         
 
         sprintTimer = 0f;
