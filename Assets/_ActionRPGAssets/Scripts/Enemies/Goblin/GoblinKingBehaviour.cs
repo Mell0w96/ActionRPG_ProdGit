@@ -18,7 +18,7 @@ public class GoblinKingBehaviour : MonoBehaviour
     bool coroutineIsWorking;
     bool pathIsValid;
     Vector3 Target;
-    public Transform player;
+    public CharacterController player;
     private float currentRateUntilScanning;
     public float startRateUntilScanning;
 
@@ -64,6 +64,7 @@ public class GoblinKingBehaviour : MonoBehaviour
         anim = GetComponent<Animator>();
         vision = visionCone.GetComponent<Vision>();
 
+        player = FindObjectOfType<CharacterController>();
         
         currentRateUntilScanning = startRateUntilScanning;
         totalScanTime = _totalScanTime;
@@ -75,7 +76,7 @@ public class GoblinKingBehaviour : MonoBehaviour
     void Update()
     {
         // calculate the distance between player and enemy
-        distanceFromPlayer = Vector3.Distance(player.position, transform.position);
+        distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
 
         // FSM
         switch (_currentState) {
@@ -147,7 +148,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                 // chasing state
             case GoblinState.Chasing: 
                 {
-                    agent.SetDestination(player.position);  // set nav mesh agent's destination to the player's position
+                    agent.SetDestination(player.transform.position);  // set nav mesh agent's destination to the player's position
                     agent.speed = _movementSpeed * speedMultiplier; // make the goblin run faster
                     anim.SetBool("isChasing", true); // set animation bool to run the animation
 
@@ -209,7 +210,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                     if (throwingRate > 0) // if throwing rate timer is greater than 0, continue decreasing and goblin continues to follow player
                     {
                         throwingRate -= Time.deltaTime;
-                        agent.SetDestination(player.position);
+                        agent.SetDestination(player.transform.position);
 
                     }
                     else 
