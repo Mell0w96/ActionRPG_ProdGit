@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Basic Sword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPickup
-  ItemName: 
-  DamagePerHit: 0
-  AttacksPerSecond: 0
+  ItemName: ShortSword
+  DamagePerHit: 4
+  AttacksPerSecond: 1
