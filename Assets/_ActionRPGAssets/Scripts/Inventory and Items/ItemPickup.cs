@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+//[CreateAssetMenu(fileName = "ItemPickup", menuName = "ActionRPG_ProdGit/ItemPickup", order = 0)]
+public abstract class ItemPickup : ScriptableObject {
+    
+public string ItemName;
+
 }
