@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class HealthPickup : Interactable
 {
-    CharacterController player;
+    CharacterMovement player;
     public float healthRegenAmnt;
     
 
     private void Start()
     {
-        player = FindObjectOfType < CharacterController >();
+        player = FindObjectOfType < CharacterMovement >();
     }
 
     public override void Interact()

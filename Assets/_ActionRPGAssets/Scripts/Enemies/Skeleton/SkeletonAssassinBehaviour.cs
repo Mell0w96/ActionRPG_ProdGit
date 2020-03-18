@@ -16,7 +16,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     public Renderer stateOfVision;
     public float movementSpeed;
     public float FindNewPathTime;
-    public CharacterController Player;
+    public CharacterMovement Player;
     private Animator anim;
     private bool playerInbound;
 
@@ -30,7 +30,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     bool pathIsValid;
 
     // Stalking variables
-    public CharacterController player;
+    public CharacterMovement player;
     
     public float chasingRange;
     public float maximumChasingRange;
@@ -66,8 +66,8 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         anim = GetComponent<Animator>();
         Ally = GameObject.FindGameObjectWithTag("Ally");
 
-        Player = FindObjectOfType<CharacterController>();
-        player = FindObjectOfType<CharacterController>();
+        Player = FindObjectOfType<CharacterMovement>();
+        player = FindObjectOfType<CharacterMovement>();
 
         
         stateOfVision.material = invisible;

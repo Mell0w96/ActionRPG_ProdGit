@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterController : MonoBehaviour, Idamageable
+public class CharacterMovement : MonoBehaviour, Idamageable
 {
     #region Variables
     [Header("Speed Settings")]
