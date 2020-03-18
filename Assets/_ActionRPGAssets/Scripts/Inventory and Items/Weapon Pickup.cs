@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "ItemPickup/Weapon Pickup", order = 0)]
-public class WeaponPickup : ItemPickup {
+public class WeaponData : ItemData {
     
 //public String ItemName;
     

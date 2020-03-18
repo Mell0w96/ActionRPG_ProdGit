@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 //[CreateAssetMenu(fileName = "ItemPickup", menuName = "ActionRPG_ProdGit/ItemPickup", order = 0)]
-public abstract class ItemPickup : ScriptableObject {
+public abstract class ItemData : ScriptableObject {
     
 public string ItemName;
 
