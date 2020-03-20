@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GrounCheck : MonoBehaviour
 {
+
+
     private CharacterMovement player;
     // Start is called before the first frame update
     void Start()

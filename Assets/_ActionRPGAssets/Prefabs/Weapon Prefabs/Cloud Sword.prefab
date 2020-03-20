@@ -114,6 +114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wind Tunnel Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 1305256860254692180, guid: fc07a5f5225900c4d836d8fc78dae540,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1809563050491702746, guid: fc07a5f5225900c4d836d8fc78dae540,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -188,6 +193,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wind Tunnel Effect (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305256860254692180, guid: fc07a5f5225900c4d836d8fc78dae540,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1809563050491702746, guid: fc07a5f5225900c4d836d8fc78dae540,
         type: 3}

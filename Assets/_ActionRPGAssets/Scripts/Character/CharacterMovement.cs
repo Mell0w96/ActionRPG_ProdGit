@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CharacterMovement : MonoBehaviour, Idamageable
 {
     #region Variables
-    [Header("Speed Settings")]
+    [Header("Movement Settings")]
 
     [SerializeField]
     private float currentSpeed;
@@ -29,20 +29,27 @@ public class CharacterMovement : MonoBehaviour, Idamageable
     [SerializeField]
     private float sprintMultiplier;
 
+    Vector3 forward;
+
+    Transform cameraTransform;
+
 
     [Header("Jump Settings")]
 
     [SerializeField]
     private float jumpForce;
     [SerializeField]
-    private float sprintJumpForce;
+    private float sprintJumpMulti;
     [SerializeField]
-    public float distanceToGround = 1f;
+    private float runJumpMulti;
+    [SerializeField]
+    public float distanceToGround;
     [SerializeField]
     private float fallMulti;
     [SerializeField]
     private float airMovementSpeed;
     public bool playerGrounded = true;
+    [SerializeField]
     private float currentJumpForce;
 
     [Header("Health Settings")]
@@ -66,8 +73,15 @@ public class CharacterMovement : MonoBehaviour, Idamageable
     [Header("Attack Settings")]
 
     public bool hasAttacked;
+
+    [Header("GroundCheck Settings")]
+
     
-    
+    public float maxSlopeAngle = 120f;
+    private float currentGroundAngle;
+    RaycastHit hit;
+
+
     [Header ("Other Settings")]
 
     [SerializeField]
@@ -94,9 +108,12 @@ public class CharacterMovement : MonoBehaviour, Idamageable
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
+        interactions = 1 << LayerMask.NameToLayer("Interactions");
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
+        cameraTransform = Camera.main.transform;
+        
 
        // camera = Camera.main;
         
@@ -115,12 +132,26 @@ public class CharacterMovement : MonoBehaviour, Idamageable
 
     void Update()
     {
+
+        #region GroundCheck
+       
+        // draw raycast going down       
+        Debug.DrawRay(transform.position, -Vector3.up, Color.red, distanceToGround);
+
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, distanceToGround, walkable))
+        {
+            //print("HIT SOMETHING");
+            playerGrounded = true;
+        }
+        else
+        {
+            playerGrounded = false;
+        }
+        #endregion       
+
         #region InteractableBehavior       
 
-        
-
-        
-            if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
             {
              Debug.Log("ITEM ADDED");
              CheckForInteractables(SearchRadius, interactions);
@@ -128,12 +159,16 @@ public class CharacterMovement : MonoBehaviour, Idamageable
 
 
         #endregion
+
+        Debug.DrawLine(transform.position, transform.position + forward * 10, Color.blue);
+        Debug.DrawLine(transform.position, transform.position - Vector3.up * 10, Color.green);
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    { 
-
+    {
+        CalculatePlayerForward();
+        CalculateSlopeAngle();
         //regulates sptinting. A timer starts when stamina reaches 0. Player can only sprint again once timer is up.
         if (sprintTimer <= 0)
         {
@@ -147,31 +182,27 @@ public class CharacterMovement : MonoBehaviour, Idamageable
         
         }
 
-       // rb.rotation = Quaternion.Euler(rb.rotation.eulerAngles + camera.transform.up);
-
-        
+       // rb.rotation = Quaternion.Euler(rb.rotation.eulerAngles + camera.transform.up);        
 
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
 
 
-       
-
-
-        Vector3 movementVector = this.transform.right * (x * currentSpeed * Time.fixedDeltaTime) + this.transform.forward * (y * currentSpeed * Time.fixedDeltaTime);
+        Vector3 movementVector = this.transform.right * (x * currentSpeed * Time.fixedDeltaTime) + forward * (y * currentSpeed * Time.fixedDeltaTime);
+        
        
 
         // If any input is selected, then set current speed to acceleration and apply the movement vector to the rigid body velocity
-        if (playerGrounded == true)
+        if (playerGrounded == true && currentGroundAngle < maxSlopeAngle)
         {
             anim.SetFloat("PlayerX", x * 0.5f);
             anim.SetFloat("PlayerY", y * 0.5f);
 
-            
+            currentJumpForce = jumpForce;
 
-            
-            
+
             anim.SetBool("isGrounded", true);
+            // if movement inputs are pressed
             if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
             {
 
@@ -179,7 +210,13 @@ public class CharacterMovement : MonoBehaviour, Idamageable
                 currentSpeed += acceleration * Time.fixedDeltaTime;
                 currentSpeed = Mathf.Min(currentSpeed, MaxSpeed);
 
-                rb.velocity = movementVector;
+                currentJumpForce = jumpForce * runJumpMulti; // when the player is moving normally add a small multipler to the jump force to make the player jump slightly higher
+
+                // set the player's rotation to the camera rotaion when movement inputs are in effect
+                rb.rotation = Quaternion.Euler(rb.velocity.x, cameraTransform.eulerAngles.y, rb.velocity.z);
+               
+
+                rb.velocity = new Vector3(movementVector.x, rb.velocity.y, movementVector.z);
                 //rb.AddRelativeForce(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
 
                 // if the sprint button is pressed then change speed and animation as well as currentJumpForce and also decrease stamina
@@ -189,8 +226,8 @@ public class CharacterMovement : MonoBehaviour, Idamageable
                     {
                         isSprinting = true;
                         expendedStamina = currentStamina - staminaDecreaseRate * Time.fixedDeltaTime;
-                        currentSpeed = MaxSpeed * sprintMultiplier;
-                        currentJumpForce = sprintJumpForce;
+                        currentSpeed = MaxSpeed * sprintMultiplier; // add the sprint multiplier to the maxspeed to make the player run faster
+                        currentJumpForce = jumpForce * sprintJumpMulti; // add the sprintjump multipplier to the jumpforce to jump higher
                         anim.SetFloat("PlayerY", y);
                         if (Input.GetButton("Horizontal"))
                         {
@@ -201,12 +238,7 @@ public class CharacterMovement : MonoBehaviour, Idamageable
                     }
 
                 }
-                else
-                {
-                    currentJumpForce = jumpForce;
-                }
-
-
+               
 
             }
 
@@ -218,7 +250,7 @@ public class CharacterMovement : MonoBehaviour, Idamageable
             }
 
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
                 Attacking();
                
@@ -226,19 +258,9 @@ public class CharacterMovement : MonoBehaviour, Idamageable
             else
             {
                 anim.SetInteger("AttackValue", 0);
-            }
+            }                   
             
-
-            
-
-
-        }
-
-
-       
-       
-
-        
+        }        
 
         // regerate stamina when no sprinting
         if (isSprinting == false && currentStamina < StartingStamina) 
@@ -254,9 +276,6 @@ public class CharacterMovement : MonoBehaviour, Idamageable
         
         }
 
-
-
-
       //  print("SPRINT TIMER" + sprintTimer);
        // print("SPRINTING" + isSprinting);
       //  print("ABLE TO SPRINT" + ableToSprint);
@@ -269,16 +288,7 @@ public class CharacterMovement : MonoBehaviour, Idamageable
                 playerGrounded = false;
                 anim.SetBool("isGrounded", false);
                 //rb.velocity = Vector3.up * jumpForce;
-                rb.AddForce(Vector3.up * currentJumpForce, ForceMode.Impulse);
-                
-                //currentSpeed = airMovementSpeed;
-                if (Input.GetButton("Vertical") || Input.GetButton("Horizontal")) 
-                {
-                    rb.velocity = movementVector;
-                }
-                    
-                
-                
+                rb.AddForce(Vector3.up * currentJumpForce * Time.fixedDeltaTime, ForceMode.Impulse);    
             }
 
         }
@@ -296,10 +306,30 @@ public class CharacterMovement : MonoBehaviour, Idamageable
             Scene thisScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(thisScene.name);
 
+        }       
+
+    }
+
+    public void CalculatePlayerForward()
+    {
+        if (!playerGrounded)
+        {
+            forward = this.transform.forward;
+            return;
+        }
+        forward = Vector3.Cross(transform.right, hit.normal);
+    }
+
+    public void CalculateSlopeAngle()
+    {
+        if (!playerGrounded)
+        {
+            currentGroundAngle = 90f;
+            return;
         }
 
-        
-
+        currentGroundAngle = Vector3.Angle(hit.normal, transform.forward);
+    
     }
 
    // take damage when enemy hits player
