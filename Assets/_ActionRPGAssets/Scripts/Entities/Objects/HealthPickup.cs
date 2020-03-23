@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class HealthPickup : Interactable
 {
-    CharacterMovement player;
+    
     public float healthRegenAmnt;
     
 
     private void Start()
     {
-        player = FindObjectOfType < CharacterMovement >();
+       
     }
 
     public override void Interact()
@@ -19,11 +19,19 @@ public class HealthPickup : Interactable
 
     void Pickup()
     {
+        if (Player.currentHealth < Player.totalHealth)
+        {
+            Player.currentHealth += healthRegenAmnt;
 
-        player.currentHealth += healthRegenAmnt;
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Debug.Log("YOU'RE ALREADY AT FULL HEALTH DIPSHIT");
+        }
         
       
-        Destroy(this.gameObject);
+     
      
     }
 

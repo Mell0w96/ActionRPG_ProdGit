@@ -6,11 +6,11 @@ public class GrounCheck : MonoBehaviour
 {
 
 
-    private CharacterMovement player;
+    private CharacterControls player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponentInParent<CharacterMovement>();
+        player = GetComponentInParent<CharacterControls>();
     }
 
     // Update is called once per frame

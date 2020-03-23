@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public float mouseSens;
     public Transform Target;
-    public Rigidbody Player;
+    
     public float distanceFromPlayer = 2;
 
     public float rotationSmoothTime = 0.1f;
@@ -41,10 +41,6 @@ public class CameraController : MonoBehaviour
         transform.eulerAngles = currentCameraRotation;
         transform.position = Target.position - transform.forward * distanceFromPlayer;
 
-        //transform.LookAt(Target);
-
-        //Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-        //Player.rotation = Quaternion.Euler(Player.velocity.x, mouseX, Player.velocity.y);
         
 
 

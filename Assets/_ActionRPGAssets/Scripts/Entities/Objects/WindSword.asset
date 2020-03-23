@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d392d113468de48b3bbac34ae44b48, type: 3}
+  m_Name: WindSword
+  m_EditorClassIdentifier: 
+  itemName: Aeris, Tempest Breaker
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  itemModel: {fileID: 8958905683697244616, guid: 0b90ad6ff3ecc844a858810232509223,
+    type: 3}
+  typeOfItem: 2
+  PlayerState: 1
+  isSpecialWeapon: 1
+  abilityGFX: {fileID: 3266821895633682349, guid: a9eecc1bcad5630458ed4e3df4209546,
+    type: 3}
+  weaponDmg: 13.5
+  AttackSpdMultiplier: 1.3

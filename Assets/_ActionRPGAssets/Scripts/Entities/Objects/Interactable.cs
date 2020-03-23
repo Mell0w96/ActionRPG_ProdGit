@@ -3,15 +3,27 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    public float interactionRadius;
+    //public float interactionRadius;
     [SerializeField]
-   // CharacterController Player;
+    public CharacterControls Player;
+    public Item item; 
+    public GameObject itemPrefab;
     
 
 
-    private void Start()
+    public void Awake()
     {
-       // Player = FindObjectOfType<CharacterController>();
+        Player = FindObjectOfType<CharacterControls>();
+        GameObject itemPrefab = Instantiate(item.itemModel);
+        itemPrefab.transform.SetParent(this.transform);
+        itemPrefab.transform.localPosition = Vector3.zero;
+        itemPrefab.transform.rotation = this.transform.rotation;
+        this.gameObject.name = item.itemName;
+        
+        
+
+
+
     }
 
 
@@ -22,8 +34,8 @@ public abstract class Interactable : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, interactionRadius);
+        //Gizmos.color = Color.green;
+       // Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 
     private void Update()
@@ -43,6 +55,24 @@ public abstract class Interactable : MonoBehaviour
 
        
        // print("Can pick up" + Player.canPickUp);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Player.canPickUp = true;
+            Debug.Log("Can Pick Up!");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Player.canPickUp = false;
+            Debug.Log("Can not Pick Up!");
+        }
     }
 
 

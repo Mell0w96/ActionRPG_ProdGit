@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9141312927775512074}
   - component: {fileID: 9141312927774512330}
   - component: {fileID: 9141312927764871626}
+  - component: {fileID: 3641619885799488976}
+  - component: {fileID: 769915766328343896}
   m_Layer: 0
   m_Name: Cloud Sword
   m_TagString: Untagged
@@ -102,6 +104,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &3641619885799488976
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141312927772248586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.27, y: 1.13, z: 0.05}
+  m_Center: {x: -0.00000008940697, y: 0.53, z: 0}
+--- !u!114 &769915766328343896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141312927772248586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e722be52945e54d921f7343792d5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDmg: 50
+  enemy: {fileID: 0}
 --- !u!1001 &8332385250435615422
 PrefabInstance:
   m_ObjectHideFlags: 0
