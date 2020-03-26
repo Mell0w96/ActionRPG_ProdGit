@@ -672,10 +672,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 83fc1560-67a4-416d-b59f-743c2c879be5
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: ActionRPG_ProdGit
+  organizationId: dex10k
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

@@ -27,13 +27,11 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private float MaxSpeed;
     [SerializeField]
-    private float strafeSpeed;
-    [SerializeField]
     private float sprintMultiplier;
 
 
     [Header("Jump Settings")]
-    
+
     [SerializeField]
     private float jumpForce;
     [SerializeField]
@@ -47,14 +45,14 @@ public class CharacterController : MonoBehaviour, Idamageable
     public bool playerGrounded = true;
     private float currentJumpForce;
 
-    [Header ("Health Settings")]
+    [Header("Health Settings")]
 
     [SerializeField]
     private float totalHealth = 100f;
     [SerializeField]
     private float damagedHealth;
-    [SerializeField]
-    private float currentHealth;
+   
+    public float currentHealth;
     [SerializeField]
     private float currentStamina;
     [SerializeField]
@@ -64,6 +62,10 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private float staminaIncreaseRate;
     private float expendedStamina;
+
+    [Header("Attack Settings")]
+
+    public bool hasAttacked;
     
     
     [Header ("Other Settings")]
@@ -73,21 +75,30 @@ public class CharacterController : MonoBehaviour, Idamageable
     [SerializeField]
     private Rigidbody rb;    
     public LayerMask walkable;
-   
-    public bool ObjectInRadius;
+    
+    public bool canPickUp;
+    //Camera camera;
+    public LayerMask interactions;
+    public float SearchRadius;
+
+    public Transform projectilePoint;
+    public GameObject windSlashPrefab;
+
 
     #endregion
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         walkable = 1 << LayerMask.NameToLayer("Ground");
         anim.SetBool("isGrounded", true);
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
+
+       // camera = Camera.main;
         
 
         sprintTimer = 0f;
@@ -97,7 +108,26 @@ public class CharacterController : MonoBehaviour, Idamageable
         deceleration = -MaxSpeed / timeToZero;
 
         currentSpeed = 0;
+
+       
         
+    }
+
+    void Update()
+    {
+        #region InteractableBehavior       
+
+        
+
+        
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+             Debug.Log("ITEM ADDED");
+             CheckForInteractables(SearchRadius, interactions);
+            }
+
+
+        #endregion
     }
 
     // Update is called once per frame
@@ -117,19 +147,27 @@ public class CharacterController : MonoBehaviour, Idamageable
         
         }
 
+       // rb.rotation = Quaternion.Euler(rb.rotation.eulerAngles + camera.transform.up);
+
+        
 
         var x = Input.GetAxis("Horizontal");
         var y = Input.GetAxis("Vertical");
 
 
+       
 
-        Vector3 movementVector = new Vector3(x * currentSpeed * Time.fixedDeltaTime, 0, y * currentSpeed * Time.fixedDeltaTime);
+
+        Vector3 movementVector = this.transform.right * (x * currentSpeed * Time.fixedDeltaTime) + this.transform.forward * (y * currentSpeed * Time.fixedDeltaTime);
+       
 
         // If any input is selected, then set current speed to acceleration and apply the movement vector to the rigid body velocity
         if (playerGrounded == true)
         {
             anim.SetFloat("PlayerX", x * 0.5f);
             anim.SetFloat("PlayerY", y * 0.5f);
+
+            
 
             
             
@@ -180,9 +218,23 @@ public class CharacterController : MonoBehaviour, Idamageable
             }
 
 
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Attacking();
+               
+            }
+            else
+            {
+                anim.SetInteger("AttackValue", 0);
+            }
+            
+
+            
+
+
         }
 
-       
+
        
        
 
@@ -205,9 +257,9 @@ public class CharacterController : MonoBehaviour, Idamageable
 
 
 
-        print("SPRINT TIMER" + sprintTimer);
-        print("SPRINTING" + isSprinting);
-        print("ABLE TO SPRINT" + ableToSprint);
+      //  print("SPRINT TIMER" + sprintTimer);
+       // print("SPRINTING" + isSprinting);
+      //  print("ABLE TO SPRINT" + ableToSprint);
 
         // Jump when pressing space
         if (playerGrounded == true) 
@@ -246,7 +298,7 @@ public class CharacterController : MonoBehaviour, Idamageable
 
         }
 
-        print("GROUNDED" + playerGrounded);
+        
 
     }
 
@@ -257,16 +309,42 @@ public class CharacterController : MonoBehaviour, Idamageable
         
         damagedHealth = currentHealth - damageAmmount;
         currentHealth = damagedHealth;
-        print("CURRENT HEALTH" + currentHealth);
+       // print("CURRENT HEALTH" + currentHealth);
 
     }
 
-    #region InteractableBehavior
+    void CheckForInteractables(float _range, LayerMask _layermask)
+    {
+        RaycastHit[] hits;
 
+        hits = Physics.SphereCastAll(this.transform.position, _range, Vector3.forward, 0.01f, _layermask);
+        Debug.Log(hits.Length);
 
+        for (int _i = 0; _i < hits.Length; _i++)
+        {
+            Interactable interactComponent = hits[_i].rigidbody.gameObject.GetComponent<Interactable>();
 
-    #endregion
+            if (interactComponent != null)
+            {
+                interactComponent.Interact();
+            }
+            else
+            {
+                Debug.LogWarning("NOPE");
+            }
+        }
+    }
 
+    void Attacking()
+    {
+       // anim.SetTrigger("attacking");
+        anim.SetInteger("AttackValue", Random.Range(1,4));
+    }
 
+    public void PerformAbility()
+    {
+        Instantiate(windSlashPrefab, projectilePoint.transform.position, projectilePoint.transform.rotation);
+    }
+    
 
-}
+ }

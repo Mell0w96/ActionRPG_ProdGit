@@ -16,7 +16,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     public Renderer stateOfVision;
     public float movementSpeed;
     public float FindNewPathTime;
-    public Transform Player;
+    public CharacterController Player;
     private Animator anim;
     private bool playerInbound;
 
@@ -30,7 +30,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     bool pathIsValid;
 
     // Stalking variables
-    public GameObject player;
+    public CharacterController player;
     
     public float chasingRange;
     public float maximumChasingRange;
@@ -65,6 +65,10 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         agent.speed = movementSpeed;
         anim = GetComponent<Animator>();
         Ally = GameObject.FindGameObjectWithTag("Ally");
+
+        Player = FindObjectOfType<CharacterController>();
+        player = FindObjectOfType<CharacterController>();
+
         
         stateOfVision.material = invisible;
     }
@@ -195,9 +199,9 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     agent.speed = runAwaySpeed;
                     stateOfVision.material = invisible;
                     // calculate distance from player
-                    float DistanceFromPlayer = Vector3.Distance(transform.position, Player.position);
+                    float DistanceFromPlayer = Vector3.Distance(transform.position, Player.transform.position);
                     // player to enemy vector
-                    Vector3 FromToPlayer = transform.position - Player.position;
+                    Vector3 FromToPlayer = transform.position - Player.transform.position;
                     // add the previous vector to the position of the thief
                     Vector3 runDirection = transform.position + FromToPlayer;
 

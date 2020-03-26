@@ -701,9 +701,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.06
-  m_Height: 1.33
+  m_Height: 1.11
   m_Direction: 1
-  m_Center: {x: 0.00000033962553, y: 0.45, z: -0.00000011477794}
+  m_Center: {x: 0.00000033962553, y: 0.3, z: -0.00000011477794}
 --- !u!114 &2035288698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +716,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83cd4da79a77ca44949a89082db9855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   damageAmmount: 10
 --- !u!1 &6685715651178061218
 GameObject:
@@ -6540,9 +6539,11 @@ GameObject:
   - component: {fileID: 6687069837140703361}
   - component: {fileID: 8725143786503695804}
   - component: {fileID: 1781629559}
+  - component: {fileID: 308688308}
+  - component: {fileID: 308688307}
   m_Layer: 0
   m_Name: Skeleton_Assassin
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6722,6 +6723,36 @@ MonoBehaviour:
   movementSpeedX: 2
   runAwaySpeed: 4
   runAwayDistance: 25
+--- !u!136 &308688308
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686673604579719560}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.04
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.05, z: 0}
+--- !u!114 &308688307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6686673604579719560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5f69ae6474ae54089014e31c3f9cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OriginalHealth: 50
+  currentHealth: 0
+  healthDrop: {fileID: 5799192135915229011, guid: e73c977748144b34696aa4cb31ad55dd,
+    type: 3}
 --- !u!1 &6686675965517168118
 GameObject:
   m_ObjectHideFlags: 0
