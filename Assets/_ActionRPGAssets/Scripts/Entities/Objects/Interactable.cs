@@ -18,12 +18,7 @@ public abstract class Interactable : MonoBehaviour
         itemPrefab.transform.SetParent(this.transform);
         itemPrefab.transform.localPosition = Vector3.zero;
         itemPrefab.transform.rotation = this.transform.rotation;
-        this.gameObject.name = item.itemName;
-        
-        
-
-
-
+        this.gameObject.name = item.itemName; 
     }
 
 
@@ -31,6 +26,8 @@ public abstract class Interactable : MonoBehaviour
     {
 
     }
+
+    
 
     private void OnDrawGizmosSelected()
     {

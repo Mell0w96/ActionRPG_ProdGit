@@ -6,10 +6,23 @@ using UnityEngine;
 public class WeaponItem : Item
 {    
     public int PlayerState;
-    public bool isSpecialWeapon;
-    public GameObject abilityGFX;
-    [Range(1, 20)]
+    public bool isSpecialWeapon;    
+    [Range(1, 100)]
     public float weaponDmg;
     [Range(0f, 5f)]
     public float AttackSpdMultiplier;
+    public SpecialWeaponBase SpecialWeapon;
+    public Transform AbilityPoint;
+
+
+    public void PerformAbility()
+    {
+        if (isSpecialWeapon)
+        {
+            
+            SpecialWeapon.MainAbility();
+        }
+        
+    }
+
 }

@@ -89,6 +89,22 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
     public bool hasAttacked;
     public WeaponBase Weapon;
+    // public float isWeapon;
+
+    public GameObject RightFist;
+    public GameObject LeftFist;
+
+
+    public float MaxSpecialPower;
+    [SerializeField]
+    private float currentSpecialPower;
+    [SerializeField]
+    private float newCurrentSpecialPower;
+    public float specialPowerIncreasePerHit;
+    public float specialPowerDecreasePerHit;
+    public bool PowerCanIncrease;
+    public bool AbilityReady;
+
 
     [Header("GroundCheck Settings")]
 
@@ -131,9 +147,10 @@ public class CharacterControls : MonoBehaviour, Idamageable
         currentHealth = totalHealth;        
         currentStamina = StartingStamina;
         cameraTransform = Camera.main.transform;
-        canJump = true;
-        Weapon = FindObjectOfType<WeaponBase>();
+        canJump = true;        
         canRun = true;
+        currentSpecialPower = 0f;      
+        
 
         
 
@@ -150,11 +167,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         acceleration = MaxSpeed / timeToMaxSpeed;
         deceleration = -MaxSpeed / timeToZero;
 
-        currentSpeed = 0;
-        if (!Weapon)
-        {
-            anim.SetInteger("PlayerState", 0);
-        }
+        currentSpeed = 0;        
 
 
 
@@ -163,8 +176,23 @@ public class CharacterControls : MonoBehaviour, Idamageable
     void Update()
     {
 
+        Weapon = gameObject.GetComponentInChildren<WeaponBase>();
+
+
+        if (currentSpecialPower >= MaxSpecialPower)
+        {
+            AbilityReady = true;
+            currentSpecialPower = MaxSpecialPower;
+        }
+
+        if (currentSpecialPower <= 0)
+        {
+            AbilityReady = false;
+            currentSpecialPower = 0;
+        }
+
         #region GroundCheck
-       
+
         // draw raycast going down       
         Debug.DrawRay(transform.position, -Vector3.up, Color.red, distanceToGround);
 
@@ -181,21 +209,52 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
         #region InteractableBehavior       
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("ITEM ADDED");
+            
+            anim.SetBool("PickingUp", true);
+
+        }
+        else
+        {
+            anim.SetBool("PickingUp", false);
+        }
+
+
+        if (Weapon != false)
+        {
+            if (Input.GetButton("DropItem"))
             {
-             Debug.Log("ITEM ADDED");
-             CheckForInteractables(SearchRadius, interactions);
+                Weapon.transform.parent = null;
+                Weapon.DropWeapon();
             }
+        }
+
+
 
 
         #endregion
 
+        
+
         Debug.DrawLine(transform.position, transform.position + forward * 10, Color.blue);
         Debug.DrawLine(transform.position, transform.position - Vector3.up * 10, Color.green);
 
-        if (Weapon != null)
+        if (!Weapon)
+        {
+            anim.SetInteger("PlayerState", 0);
+            print("No Weapon");
+            RightFist.SetActive(true);
+            LeftFist.SetActive(true);
+        }
+        else 
         {
             anim.SetInteger("PlayerState", Weapon.setPlayerState);
+            anim.SetFloat("AttackSpeed", Weapon.setAttackSpeed);
+            print("There is Weapon");
+            RightFist.SetActive(false);
+            LeftFist.SetActive(false);
         }
         
     }
@@ -217,8 +276,9 @@ public class CharacterControls : MonoBehaviour, Idamageable
             ableToSprint = false;
         
         }
-        
 
+        // set the player's rotation to the camera rotaion when movement inputs are in effect
+        rb.rotation = Quaternion.Euler(rb.velocity.x, cameraTransform.eulerAngles.y, rb.velocity.z);
 
 
         // rb.rotation = Quaternion.Euler(rb.rotation.eulerAngles + camera.transform.up);        
@@ -257,8 +317,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
                 currentJumpForce = jumpForce * runJumpMulti; // when the player is moving normally add a small multipler to the jump force to make the player jump slightly higher
 
-                // set the player's rotation to the camera rotaion when movement inputs are in effect
-                rb.rotation = Quaternion.Euler(rb.velocity.x, cameraTransform.eulerAngles.y, rb.velocity.z);
+                
                
                 playerVelocity = new Vector3(movementVector.x, rb.velocity.y, movementVector.z);
                 rb.velocity = playerVelocity;
@@ -295,10 +354,11 @@ public class CharacterControls : MonoBehaviour, Idamageable
             }
 
 
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
             {
                 Attacking();
-                print("PUNCHING");                
+                print("PUNCHING");            
+               
             }
             else 
             {
@@ -351,6 +411,15 @@ public class CharacterControls : MonoBehaviour, Idamageable
             rb.rotation = Quaternion.Euler(rb.velocity.x, cameraTransform.eulerAngles.y, rb.velocity.z);
             canJump = false;
 
+        }
+
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            rb.rotation = Quaternion.Euler(rb.velocity.x, rb.transform.eulerAngles.y, rb.velocity.z);
+        }
+        else
+        {
+            rb.rotation = Quaternion.Euler(rb.velocity.x, cameraTransform.eulerAngles.y, rb.velocity.z);
         }
 
         
@@ -421,42 +490,63 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
             if (interactComponent != null && canPickUp)
             {
-                interactComponent.Interact();
+                interactComponent.Interact();                
             }
-            else
+            else 
             {
-                Debug.LogWarning("NOPE");
+                Debug.LogWarning("NOPE");          
+
             }
         }
+    }
+
+    public void PickUpAfterAnimation()
+    {
+        CheckForInteractables(SearchRadius, interactions);
     }
 
     void Attacking()
     {
        // anim.SetTrigger("attacking");
-        anim.SetInteger("AttackValue", Random.Range(1,5));
+        anim.SetInteger("AttackValue", Random.Range(1,8));
     }
 
-    public void PerformAbility()
-    {
-        Instantiate(windSlashPrefab, projectilePoint.transform.position, projectilePoint.transform.rotation);
-    }
+     public void PerformWeaponAbility()
+     {
+          if (AbilityReady)
+                 {
+                     Weapon.PerfromMainAbility();
+                     print("BOOM BOOM ");
+                 }
+     }
 
     public void EnableJumping()
     {
         canJump = true;
-        Debug.Log("CAN JUMP NOW");
+        //Debug.Log("CAN JUMP NOW");
     }
 
-    // stop running when playing attack animation
-    public void StopRunning()
+
+    //called by the weaponDamage script whenever enemy collides with the trigger
+    public void IncreasePower(float specialPowerIncreasePerHit)
     {
-        canRun = false;
+        if (Weapon.setAsSpecial)
+        {
+            newCurrentSpecialPower = currentSpecialPower + specialPowerIncreasePerHit;
+            currentSpecialPower = newCurrentSpecialPower;         
+
+        }
     }
 
-    // allow player to run after animation is done
-    public void StartRunning()
+    public void DecreasePower()
     {
-        canRun = true;
+        if (AbilityReady)
+        {
+            newCurrentSpecialPower = currentSpecialPower - specialPowerDecreasePerHit;
+            currentSpecialPower = newCurrentSpecialPower;
+        }
     }
+
+
 
  }

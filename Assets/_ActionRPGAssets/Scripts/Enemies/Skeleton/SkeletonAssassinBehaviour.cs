@@ -179,8 +179,8 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                 }
             case SkeletonState.Attacking: 
                 {
-                    print("ATTACKING");
-                    print("Attacking" + currentAttackRate);
+                    //print("ATTACKING");
+                    //print("Attacking" + currentAttackRate);
                     if (currentAttackRate > 0)
                     {
 
@@ -237,7 +237,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
 
         }
-        print("DISSENGAME TIMER" + dissengageTimer);
+        //print("DISSENGAME TIMER" + dissengageTimer);
     }
     public void WaitingSkeletonCooldown() 
     {

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967228701}
   m_LocalRotation: {x: -0.0000003518031, y: 0.793353, z: 0.00000042537658, w: -0.60876185}
-  m_LocalPosition: {x: -0.007288304, y: 0.00004959549, z: 0.0029937988}
+  m_LocalPosition: {x: -0, y: 10.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2037974256765878206}
@@ -160,6 +160,7 @@ Transform:
   m_Children:
   - {fileID: 2037974255634254945}
   - {fileID: 6894166918293376977}
+  - {fileID: 7143630025555186145}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -240,7 +241,7 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   timeToMaxSpeed: 0.75
-  timeToZero: 0.5
+  timeToZero: 0.15
   sprintCooldownTime: 3
   MaxSpeed: 125
   sprintMultiplier: 1.7
@@ -253,17 +254,26 @@ MonoBehaviour:
   playerGrounded: 1
   currentJumpForce: 0
   jumpTimer: 0
-  JumpCooldown: 0
-  canJump: 0
+  JumpCooldown: 0.5
+  canJump: 1
   totalHealth: 100
   damagedHealth: 0
-  currentHealth: 0
+  currentHealth: 50
   currentStamina: 0
   StartingStamina: 100
   staminaDecreaseRate: 5
   staminaIncreaseRate: 1
   hasAttacked: 0
   Weapon: {fileID: 0}
+  RightFist: {fileID: 8609024042684578384}
+  LeftFist: {fileID: 3666777322794749127}
+  MaxSpecialPower: 100
+  currentSpecialPower: 0
+  newCurrentSpecialPower: 0
+  specialPowerIncreasePerHit: 5
+  specialPowerDecreasePerHit: 10
+  PowerCanIncrease: 0
+  AbilityReady: 0
   maxSlopeAngle: 120
   anim: {fileID: 0}
   rb: {fileID: 0}
@@ -274,7 +284,7 @@ MonoBehaviour:
   interactions:
     serializedVersion: 2
     m_Bits: 4294967295
-  SearchRadius: 2
+  SearchRadius: 1
   projectilePoint: {fileID: 0}
   windSlashPrefab: {fileID: 3266821895633682349, guid: a9eecc1bcad5630458ed4e3df4209546,
     type: 3}
@@ -1751,6 +1761,36 @@ Transform:
   m_Father: {fileID: 2037974255001287069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3400685191992078402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7143630025555186145}
+  m_Layer: 0
+  m_Name: AbilityActuationPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7143630025555186145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3400685191992078402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.361, z: 0.913}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2037974254866942771}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3502590326831246748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,7 +1834,7 @@ GameObject:
   - component: {fileID: 3607833561874368521}
   m_Layer: 0
   m_Name: LeftHandHitBox
-  m_TagString: Untagged
+  m_TagString: Fists
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1840,6 +1880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDmg: 5
   enemy: {fileID: 0}
+  isAbility: 0
 --- !u!1 &8609024042684578384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,7 +1894,7 @@ GameObject:
   - component: {fileID: 4034974438449008092}
   m_Layer: 0
   m_Name: RightHandHitBox
-  m_TagString: Untagged
+  m_TagString: Fists
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1899,3 +1940,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDmg: 5
   enemy: {fileID: 0}
+  isAbility: 0
