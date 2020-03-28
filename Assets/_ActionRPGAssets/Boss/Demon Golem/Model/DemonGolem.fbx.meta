@@ -626,7 +626,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 50
-    rootMotionBoneName: 
+    rootMotionBoneName: Golem_ROOT
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
