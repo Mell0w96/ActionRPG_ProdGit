@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharacterControls : MonoBehaviour, Idamageable
 {
@@ -116,6 +117,12 @@ public class CharacterControls : MonoBehaviour, Idamageable
     private float currentGroundAngle;
     RaycastHit hit;
 
+    [Header("GUI Settings")]
+    public UIBars healthUI;
+    public UIBars energyUI;
+    public UIBars AbilityPowerUI;
+    public Image AbilityPowerBarImage;
+
 
     [Header ("Other Settings")]
 
@@ -131,7 +138,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
     public float SearchRadius;
 
     public Transform projectilePoint;
-    public GameObject windSlashPrefab;
+    //public GameObject windSlashPrefab;
 
 
     #endregion
@@ -147,16 +154,24 @@ public class CharacterControls : MonoBehaviour, Idamageable
         walkable = 1 << LayerMask.NameToLayer("Ground");
         interactions = 1 << LayerMask.NameToLayer("Interactions");
         anim.SetBool("isGrounded", true);
-        currentHealth = totalHealth;        
+        currentHealth = totalHealth;
+        healthUI.SetMaxValue(totalHealth);
         currentStamina = StartingStamina;
+        energyUI.SetMaxValue(StartingStamina);
         cameraTransform = Camera.main.transform;
         canJump = true;        
         canRun = true;
         PowerCanIncrease = false;
-        currentSpecialPower = 0f;      
-        
+        currentSpecialPower = 0f;        
+        AbilityPowerUI.SetMaxValue(MaxSpecialPower);            
+       
 
-        
+        //AbilityPowerUI.enabled = false;
+
+
+
+
+
 
 
         // camera = Camera.main;
@@ -181,7 +196,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
     {
 
         Weapon = gameObject.GetComponentInChildren<WeaponBase>();
-        
+
+        healthUI.SetValue(currentHealth);
+        energyUI.SetValue(currentStamina);
+        AbilityPowerUI.SetValue(currentSpecialPower);
+
+
+
+
 
 
         if (currentSpecialPower >= MaxSpecialPower)
@@ -260,6 +282,8 @@ public class CharacterControls : MonoBehaviour, Idamageable
             print("There is Weapon");
             RightFist.SetActive(false);
             LeftFist.SetActive(false);
+                    
+            
         }
         
     }
@@ -447,7 +471,12 @@ public class CharacterControls : MonoBehaviour, Idamageable
             Scene thisScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(thisScene.name);
 
-        }       
+        }
+
+        if (currentHealth >= totalHealth)
+        {
+            currentHealth = totalHealth;
+        }
 
     }
 
