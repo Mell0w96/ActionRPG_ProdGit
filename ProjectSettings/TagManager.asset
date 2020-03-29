@@ -7,6 +7,8 @@ TagManager:
   - Ally
   - Interactable
   - enemy
+  - GroundCheck
+  - Fists
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - 
   - Ground
-  - Interactable
+  - Interactions
   - 
   - 
   - 

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a355bec69112cf4a97d1260b8444fce, type: 3}
+  m_Name: WindSwordAbilities
+  m_EditorClassIdentifier: 
+  abilityGFX: {fileID: 3266821895633682349, guid: a9eecc1bcad5630458ed4e3df4209546,
+    type: 3}
+  weaponItemRef: {fileID: 11400000, guid: 0e3d0b27747e4e1459a74bdb42a4728e, type: 2}

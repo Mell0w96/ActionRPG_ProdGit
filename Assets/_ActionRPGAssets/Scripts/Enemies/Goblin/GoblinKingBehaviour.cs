@@ -18,7 +18,7 @@ public class GoblinKingBehaviour : MonoBehaviour
     bool coroutineIsWorking;
     bool pathIsValid;
     Vector3 Target;
-    public CharacterController player;
+    public CharacterControls player;
     private float currentRateUntilScanning;
     public float startRateUntilScanning;
 
@@ -64,7 +64,7 @@ public class GoblinKingBehaviour : MonoBehaviour
         anim = GetComponent<Animator>();
         vision = visionCone.GetComponent<Vision>();
 
-        player = FindObjectOfType<CharacterController>();
+        player = FindObjectOfType<CharacterControls>();
         
         currentRateUntilScanning = startRateUntilScanning;
         totalScanTime = _totalScanTime;

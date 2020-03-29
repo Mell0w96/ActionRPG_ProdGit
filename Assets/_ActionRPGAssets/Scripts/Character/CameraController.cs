@@ -6,7 +6,12 @@ public class CameraController : MonoBehaviour
 {
     public float mouseSens;
     public Transform Target;
-    public Rigidbody Player;    
+    
+    public float distanceFromPlayer = 2;
+
+    public float rotationSmoothTime = 0.1f;
+    Vector3 smoothVelocity;
+    Vector3 currentCameraRotation;
   
     float mouseX, mouseY;
     float minYconstraint = -35f;
@@ -26,14 +31,16 @@ public class CameraController : MonoBehaviour
 
     void CameraControl()    
     {
-        mouseX += Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
-        mouseY -= Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
+        mouseX += Input.GetAxis("Mouse X") * mouseSens;
+        mouseY -= Input.GetAxis("Mouse Y") * mouseSens;
         mouseY = Mathf.Clamp(mouseY, minYconstraint, maxYconstraint);
 
-        transform.LookAt(Target);
+        Vector3 targetRot = new Vector3(mouseY, mouseX);
 
-        Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-        Player.rotation = Quaternion.Euler(Player.velocity.x, mouseX, Player.velocity.y);
+        currentCameraRotation = Vector3.SmoothDamp(currentCameraRotation, targetRot, ref smoothVelocity, rotationSmoothTime);
+        transform.eulerAngles = currentCameraRotation;
+        transform.position = Target.position - transform.forward * distanceFromPlayer;
+
         
 
 

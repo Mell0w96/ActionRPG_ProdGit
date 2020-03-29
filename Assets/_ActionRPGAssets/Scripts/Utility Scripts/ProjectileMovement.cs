@@ -11,6 +11,8 @@ public class ProjectileMovement : MonoBehaviour
     [HideInInspector]
     //tells the projectile which direction to move
     public Vector3 MoveDirection = Vector3.forward;
+    private float TimeActive = 7f;
+    private float currentActiveTime;
 
     [Range(0,50)]
     public float MoveSpeedPerSecond;
@@ -20,6 +22,7 @@ public class ProjectileMovement : MonoBehaviour
     {
         rigidbodyComponent = this.gameObject.GetComponent<Rigidbody>();
         MoveDirection = this.transform.forward;
+        currentActiveTime = 0;
     }
 
     // Update is called once per frame
@@ -28,6 +31,16 @@ public class ProjectileMovement : MonoBehaviour
         //transform.Translate(Vector3.forward * MoveSpeedPerSecond * Time.deltaTime);
 
          moveForward();
+
+        // after 7 seconds destroy the game object
+        if (currentActiveTime >= TimeActive)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            currentActiveTime += Time.deltaTime;
+        }
     }
 
 

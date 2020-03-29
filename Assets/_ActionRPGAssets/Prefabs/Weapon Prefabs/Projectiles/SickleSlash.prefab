@@ -171,6 +171,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDmg: 25
   enemy: {fileID: 0}
-  _layermask:
-    serializedVersion: 2
-    m_Bits: 0
+  isAbility: 1

@@ -16,7 +16,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     public Renderer stateOfVision;
     public float movementSpeed;
     public float FindNewPathTime;
-    public CharacterController Player;
+    public CharacterControls Player;
     private Animator anim;
     private bool playerInbound;
 
@@ -30,8 +30,8 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     bool pathIsValid;
 
     // Stalking variables
-    public CharacterController player;
-    
+    // public CharacterControls player;
+    public float stalkingDistance;
     public float chasingRange;
     public float maximumChasingRange;
 
@@ -66,8 +66,8 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         anim = GetComponent<Animator>();
         Ally = GameObject.FindGameObjectWithTag("Ally");
 
-        Player = FindObjectOfType<CharacterController>();
-        player = FindObjectOfType<CharacterController>();
+        Player = FindObjectOfType<CharacterControls>();
+       // player = FindObjectOfType<CharacterControls>();
 
         
         stateOfVision.material = invisible;
@@ -75,7 +75,18 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
     private void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        float playerDistance = Vector3.Distance(transform.position, Player.transform.position);
+
+        if (playerDistance <= stalkingDistance)
+        {
+            playerInbound = true;
+            Debug.Log("INBOUND PLAYER INBOUND");
+        }
+        else
+        {
+            playerInbound = false;
+            Debug.Log("Player has left the chat");
+        }
         switch (_currentState) 
         {
 
@@ -110,7 +121,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     stateOfVision.material = invisible;
                     agent.speed = movementSpeed;
 
-                    agent.SetDestination(player.transform.position);
+                    agent.SetDestination(Player.transform.position);
 
                     // calculate distance from player
 
@@ -138,7 +149,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     stateOfVision.material = visible;
                     anim.SetInteger("AnimationValue", 1);
                     agent.speed = movementSpeed * movementSpeedX;
-                    agent.SetDestination(player.transform.position);
+                    agent.SetDestination(Player.transform.position);
                     
                     
                     if (playerDistance < attackRange)
@@ -168,13 +179,13 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                 }
             case SkeletonState.Attacking: 
                 {
-                    print("ATTACKING");
-                    print("Attacking" + currentAttackRate);
+                    //print("ATTACKING");
+                    //print("Attacking" + currentAttackRate);
                     if (currentAttackRate > 0)
                     {
 
                         currentAttackRate -= Time.deltaTime;
-                        agent.SetDestination(player.transform.position);
+                        agent.SetDestination(Player.transform.position);
 
                     }
                     else
@@ -186,7 +197,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     if (playerDistance > attackRange) 
                     {
                         _currentState = SkeletonState.Engaging;
-                        agent.SetDestination(player.transform.position);
+                        agent.SetDestination(Player.transform.position);
 
                     }
 
@@ -226,40 +237,16 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
 
         }
-        print("DISSENGAME TIMER" + dissengageTimer);
+        //print("DISSENGAME TIMER" + dissengageTimer);
     }
     public void WaitingSkeletonCooldown() 
     {
         anim.SetInteger("AnimationValue", 1);
 
     }
+    
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            playerInbound = true;
-        }
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            playerInbound = true;
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            playerInbound = false;
-        }
-
-    }
+   
     Vector3 newRandomPosition()
     {
         float x = Random.Range(-20f, 20f);

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GrounCheck : MonoBehaviour
 {
-    private CharacterController player;
+
+
+    private CharacterControls player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponentInParent<CharacterController>();
+        player = GetComponentInParent<CharacterControls>();
     }
 
     // Update is called once per frame
