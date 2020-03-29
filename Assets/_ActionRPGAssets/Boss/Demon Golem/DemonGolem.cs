@@ -210,7 +210,7 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     void Die()
     {
-
+        Destroy(this.gameObject,2f);
     }
 
     public void DealDamage(float damageAmmount,Idamageable target)
