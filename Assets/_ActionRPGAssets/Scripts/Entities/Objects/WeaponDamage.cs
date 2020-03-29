@@ -31,8 +31,10 @@ public class WeaponDamage : MonoBehaviour
         if (other.gameObject.tag == "enemy")
         {
             enemy = other.gameObject.GetComponent<EnemyHealth>();
-            DealDamage(weaponDmg);
-            playerRef.IncreasePower(playerRef.specialPowerIncreasePerHit);
+           
+                DealDamage(weaponDmg);
+                playerRef.IncreasePower();
+          
             //Debug.Log(weaponDmg + "Weapon Damage");
         }
     }
@@ -42,6 +44,8 @@ public class WeaponDamage : MonoBehaviour
         if (other.gameObject.tag == "enemy")
         {
             playerRef.IncreasePower(0);
+            playerRef.AttackPointActive = false;
+           
         }
     }
 

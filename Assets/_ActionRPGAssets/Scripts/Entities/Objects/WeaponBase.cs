@@ -13,8 +13,9 @@ public class WeaponBase : Interactable
     public WeaponDamage WeaponHitBox;
     public Transform ActuationPoint;
     public Transform PlayerItemSlot;
-    public Collider WeaponCollider;
-    private Rigidbody weaponRB;
+    public BoxCollider WeaponCollider;
+    public SphereCollider SphrCol;
+    public Rigidbody weaponRB;
     public bool canActivate;
     
 
@@ -27,7 +28,8 @@ public class WeaponBase : Interactable
         setAttackSpeed = weapon.AttackSpdMultiplier;
         WeaponHitBox = GetComponentInChildren<WeaponDamage>();
         WeaponHitBox.weaponDmg = setAttackDmg;
-        WeaponCollider = GetComponent<Collider>();
+        WeaponCollider = GetComponentInChildren<BoxCollider>();
+        SphrCol = GetComponent<SphereCollider>();
         weaponRB = GetComponent<Rigidbody>();
         weapon.AbilityPoint = ActuationPoint;
 
@@ -65,9 +67,11 @@ public class WeaponBase : Interactable
             transform.SetParent(PlayerItemSlot.transform);
             transform.position = PlayerItemSlot.transform.position;
             transform.rotation = PlayerItemSlot.transform.rotation;
-            WeaponCollider.enabled = false;
+            WeaponCollider.isTrigger = true;
+            SphrCol.enabled = false;
             weaponRB.isKinematic = true;
             weaponRB.detectCollisions = false;
+          
 
         }
         else
@@ -80,7 +84,9 @@ public class WeaponBase : Interactable
 
     public void DropWeapon()
     {
-        WeaponCollider.enabled = true;
+        WeaponCollider.isTrigger = false;
+        SphrCol.enabled = true;
+       
         weaponRB.isKinematic = false;
         weaponRB.detectCollisions = true;
     }

@@ -20,7 +20,7 @@ MonoBehaviour:
   typeOfItem: 2
   PlayerState: 1
   isSpecialWeapon: 1
-  weaponDmg: 60.2
+  weaponDmg: 25
   AttackSpdMultiplier: 1.5
   SpecialWeapon: {fileID: 11400000, guid: d7359830faca9f844be631821d4c60cf, type: 2}
   AbilityPoint: {fileID: 0}

@@ -807,7 +807,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18062
+  m_Name: pb_Mesh109652
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1016,7 +1016,7 @@ PrefabInstance:
     - target: {fileID: 6686673604579719560, guid: 45bcbaf8cd0c8c64abc4394e1ae92846,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6691419645476764554, guid: 45bcbaf8cd0c8c64abc4394e1ae92846,
         type: 3}
@@ -2052,6 +2052,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1058830561}
+    - target: {fileID: 6648008574700462330, guid: c169f129b00e80141916e18987f4a6a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6648646856634304335, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
       propertyPath: m_Name
@@ -2060,7 +2065,7 @@ PrefabInstance:
     - target: {fileID: 6648646856634304335, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6651164809508711235, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
@@ -2180,6 +2185,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037974254866942774, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
+        type: 3}
+      propertyPath: PowerCanIncrease
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2037974254866942780, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
         type: 3}

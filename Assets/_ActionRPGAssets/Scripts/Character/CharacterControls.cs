@@ -89,6 +89,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
     public bool hasAttacked;
     public WeaponBase Weapon;
+    
     // public float isWeapon;
 
     public GameObject RightFist;
@@ -104,6 +105,8 @@ public class CharacterControls : MonoBehaviour, Idamageable
     public float specialPowerDecreasePerHit;
     public bool PowerCanIncrease;
     public bool AbilityReady;
+    [HideInInspector]
+    public bool AttackPointActive;
 
 
     [Header("GroundCheck Settings")]
@@ -177,6 +180,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
     {
 
         Weapon = gameObject.GetComponentInChildren<WeaponBase>();
+        
 
 
         if (currentSpecialPower >= MaxSpecialPower)
@@ -357,13 +361,13 @@ public class CharacterControls : MonoBehaviour, Idamageable
             if (Input.GetButtonDown("Fire1"))
             {
                 Attacking();
-                print("PUNCHING");            
-               
+                print("PUNCHING");  
             }
             else 
             {
                 anim.SetInteger("AttackValue", 0);
                 print("AttackValue is 0");
+                
             }                   
             
         }        
@@ -444,25 +448,25 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
     }
 
-    public void CalculatePlayerForward()
+    public void CalculatePlayerForward() // calculate player forward. If the player is in the air then its forward is simply its transform.forward
     {
         if (!playerGrounded)
         {
             forward = this.transform.forward;
             return;
         }
-        forward = Vector3.Cross(transform.right, hit.normal);
+        forward = Vector3.Cross(transform.right, hit.normal); // calculate cross product between right vector and ray hit point to get new player forward
     }
 
     public void CalculateSlopeAngle()
     {
         if (!playerGrounded)
         {
-            currentGroundAngle = 90f;
+            currentGroundAngle = 90f; // base angle is set at 90
             return;
         }
 
-        currentGroundAngle = Vector3.Angle(hit.normal, transform.forward);
+        currentGroundAngle = Vector3.Angle(hit.normal, transform.forward); // calculate the angle between ray hit point and player transform forward vector
     
     }
 
@@ -477,41 +481,42 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
     }
 
-    void CheckForInteractables(float _range, LayerMask _layermask)
+    void CheckForInteractables(float _range, LayerMask _layermask) // check for interactables according to layer
     {
         RaycastHit[] hits;
 
-        hits = Physics.SphereCastAll(this.transform.position, _range, Vector3.forward, 0.01f, _layermask);
+        hits = Physics.SphereCastAll(this.transform.position, _range, Vector3.forward, 0.01f, _layermask); // store hits as spherecast collision points
         Debug.Log(hits.Length);
 
         for (int _i = 0; _i < hits.Length; _i++)
         {
-            Interactable interactComponent = hits[_i].transform.gameObject.GetComponent<Interactable>();
+            Interactable interactComponent = hits[_i].transform.gameObject.GetComponent<Interactable>(); // grab hits that contain the interactable component
 
-            if (interactComponent != null && canPickUp)
+            if (interactComponent != null && canPickUp) // if the component is present and the item has signaled that it can picked up then call the interact funtion that comes from the Interactable class
             {
-                interactComponent.Interact();                
+                interactComponent.Interact();
+                canPickUp = false;
             }
             else 
             {
-                Debug.LogWarning("NOPE");          
+                Debug.LogWarning("NOPE"); // else don't
 
             }
         }
     }
 
-    public void PickUpAfterAnimation()
+    public void PickUpAfterAnimation() // Animation Event played at the end of the Pickup animation
     {
         CheckForInteractables(SearchRadius, interactions);
     }
 
-    void Attacking()
+    void Attacking() // Attack Method - Set Attack Value to a random range to play through random attack animations
     {
        // anim.SetTrigger("attacking");
         anim.SetInteger("AttackValue", Random.Range(1,8));
     }
 
-     public void PerformWeaponAbility()
+     public void PerformWeaponAbility() // Event called within the attack animations at a specific frame
      {
           if (AbilityReady)
                  {
@@ -526,9 +531,9 @@ public class CharacterControls : MonoBehaviour, Idamageable
         //Debug.Log("CAN JUMP NOW");
     }
 
-
+    #region Ability Power Up & Power Down
     //called by the weaponDamage script whenever enemy collides with the trigger
-    public void IncreasePower(float specialPowerIncreasePerHit)
+    public void IncreasePower()
     {
         if (Weapon.setAsSpecial)
         {
@@ -546,7 +551,20 @@ public class CharacterControls : MonoBehaviour, Idamageable
             currentSpecialPower = newCurrentSpecialPower;
         }
     }
+    #endregion 
 
-
-
- }
+    #region Attack Point In Animation
+    public void EnableAttackPoint()
+    {
+        AttackPointActive = true;
+        Weapon.weaponRB.detectCollisions = true;
+        print("RB ENABLED");
+    }
+    public void DisableAttackPoint()
+    {
+        AttackPointActive = false;
+        Weapon.weaponRB.detectCollisions = false;
+        print("RB Disabled");
+    }
+    #endregion
+}

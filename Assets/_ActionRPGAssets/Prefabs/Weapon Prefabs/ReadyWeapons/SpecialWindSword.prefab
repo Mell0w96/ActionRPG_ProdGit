@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5528772183941384857}
   - component: {fileID: 5528772183941384856}
   - component: {fileID: 5528772183941384871}
-  - component: {fileID: 5528772183941384868}
   m_Layer: 9
   m_Name: SpecialWindSword
   m_TagString: Interactable
@@ -58,6 +57,8 @@ MonoBehaviour:
   ActuationPoint: {fileID: 0}
   PlayerItemSlot: {fileID: 0}
   WeaponCollider: {fileID: 0}
+  SphrCol: {fileID: 0}
+  weaponRB: {fileID: 0}
   canActivate: 0
 --- !u!135 &5528772183941384856
 SphereCollider:
@@ -87,17 +88,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &5528772183941384868
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5528772183941384859}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09, y: 0.34, z: 1}
-  m_Center: {x: 0, y: 0.07, z: 0.34}
+  m_CollisionDetection: 1
