@@ -17,4 +17,4 @@ MonoBehaviour:
   isDefaultItem: 0
   itemModel: {fileID: 4484174174285474315, guid: 3aa643f9dcde52849a94ec4d73fe861a,
     type: 3}
-  typeOfItem: 1
+  typeOfItem: 0

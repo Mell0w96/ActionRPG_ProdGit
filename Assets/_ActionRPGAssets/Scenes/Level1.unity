@@ -789,18 +789,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2037974256164253899}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1058830556 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2037974254866942780, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2037974256164253899}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1058830561 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2037974254866942771, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2037974256164253899}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1080326939
 Mesh:
   m_ObjectHideFlags: 0
@@ -964,25 +952,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1101073832 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8432463254133068862, guid: 171ebf3c346f3444191d8b2a75817376,
-    type: 3}
-  m_PrefabInstance: {fileID: 1255142574}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1101073835
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101073832}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.6
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1150910750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7143630025555186145, guid: 81f3a9f773099694d8a5907c5e8dcfe0,
@@ -996,27 +965,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1781629559, guid: 45bcbaf8cd0c8c64abc4394e1ae92846, type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1781629559, guid: 45bcbaf8cd0c8c64abc4394e1ae92846, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1058830556}
-    - target: {fileID: 1781629559, guid: 45bcbaf8cd0c8c64abc4394e1ae92846, type: 3}
-      propertyPath: stalkingDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 6686673604579719560, guid: 45bcbaf8cd0c8c64abc4394e1ae92846,
         type: 3}
       propertyPath: m_Name
       value: Skeleton_Assassin
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686673604579719560, guid: 45bcbaf8cd0c8c64abc4394e1ae92846,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6691419645476764554, guid: 45bcbaf8cd0c8c64abc4394e1ae92846,
         type: 3}
@@ -1073,8 +1025,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8725143786503695804, guid: 45bcbaf8cd0c8c64abc4394e1ae92846, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45bcbaf8cd0c8c64abc4394e1ae92846, type: 3}
 --- !u!1001 &1255142574
 PrefabInstance:
@@ -1157,12 +1108,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 3339301068483687425, guid: 71c07e6b06beaa54392354138b7755ff,
-        type: 3}
-      propertyPath: itemPrefab
-      value: 
-      objectReference: {fileID: 3339301068483687424, guid: 71c07e6b06beaa54392354138b7755ff,
-        type: 3}
     - target: {fileID: 3339301068483687429, guid: 71c07e6b06beaa54392354138b7755ff,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1970,7 +1915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSens: 0.5
   Target: {fileID: 649360007}
-  distanceFromPlayer: 5
+  distanceFromPlayer: 4.3
   rotationSmoothTime: 0.1
 --- !u!1001 &1695760077
 PrefabInstance:
@@ -2051,7 +1996,7 @@ PrefabInstance:
     - target: {fileID: 1706688676, guid: c169f129b00e80141916e18987f4a6a2, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1058830561}
+      objectReference: {fileID: 0}
     - target: {fileID: 6648008574700462330, guid: c169f129b00e80141916e18987f4a6a2,
         type: 3}
       propertyPath: m_Enabled

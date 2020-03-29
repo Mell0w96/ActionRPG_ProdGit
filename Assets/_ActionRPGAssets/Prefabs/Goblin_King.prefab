@@ -2861,7 +2861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalHealth: 200
   currentHealth: 0
-  healthDrop: {fileID: 5799192135915229011, guid: e73c977748144b34696aa4cb31ad55dd,
+  healthDrop: {fileID: 8432463254133068862, guid: 171ebf3c346f3444191d8b2a75817376,
     type: 3}
 --- !u!1 &6648670764863327953
 GameObject:

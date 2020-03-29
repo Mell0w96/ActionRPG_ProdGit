@@ -28,7 +28,7 @@ public class EnemyHealth : MonoBehaviour, Idamageable
     {
         if (currentHealth <= 0)
         {
-            Instantiate(healthDrop, this.transform.position, this.transform.rotation);
+            Instantiate(healthDrop, this.transform.position, transform.rotation* Quaternion.Euler(0f,180f,0f) );
             Destroy(this.gameObject);
             
         }

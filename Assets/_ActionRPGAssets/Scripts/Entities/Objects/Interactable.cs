@@ -11,14 +11,24 @@ public abstract class Interactable : MonoBehaviour
     
 
 
-    public void Awake()
+    public virtual void Awake()
     {
         Player = FindObjectOfType<CharacterControls>();
-        GameObject itemPrefab = Instantiate(item.itemModel);
-        itemPrefab.transform.SetParent(this.transform);
-        itemPrefab.transform.localPosition = Vector3.zero;
-        itemPrefab.transform.rotation = this.transform.rotation;
-        this.gameObject.name = item.itemName; 
+        if (item != null)
+        {
+            itemPrefab = Instantiate(item.itemModel);
+            itemPrefab.transform.SetParent(this.transform);
+            itemPrefab.transform.localPosition = Vector3.zero;
+            itemPrefab.transform.rotation = this.transform.rotation;
+            this.gameObject.name = item.itemName;
+        }
+        else
+        {
+            return;
+        }
+        
+      
+        
     }
 
 

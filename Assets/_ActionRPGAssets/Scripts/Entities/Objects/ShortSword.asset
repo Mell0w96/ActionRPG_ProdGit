@@ -17,9 +17,10 @@ MonoBehaviour:
   isDefaultItem: 0
   itemModel: {fileID: 5736989727908257443, guid: 20c8cb02695dc7742931b11adbb1f25e,
     type: 3}
-  typeOfItem: 0
+  typeOfItem: 2
   PlayerState: 1
   isSpecialWeapon: 0
-  abilityGFX: {fileID: 0}
   weaponDmg: 10
   AttackSpdMultiplier: 1
+  SpecialWeapon: {fileID: 0}
+  AbilityPoint: {fileID: 0}

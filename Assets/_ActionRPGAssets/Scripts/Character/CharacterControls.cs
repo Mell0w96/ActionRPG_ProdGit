@@ -152,6 +152,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         cameraTransform = Camera.main.transform;
         canJump = true;        
         canRun = true;
+        PowerCanIncrease = false;
         currentSpecialPower = 0f;      
         
 
@@ -361,7 +362,9 @@ public class CharacterControls : MonoBehaviour, Idamageable
             if (Input.GetButtonDown("Fire1"))
             {
                 Attacking();
-                print("PUNCHING");  
+                print("PUNCHING");
+                
+                
             }
             else 
             {
@@ -535,11 +538,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
     //called by the weaponDamage script whenever enemy collides with the trigger
     public void IncreasePower()
     {
-        if (Weapon.setAsSpecial)
+        if (Weapon != null && Weapon.setAsSpecial)
         {
-            newCurrentSpecialPower = currentSpecialPower + specialPowerIncreasePerHit;
-            currentSpecialPower = newCurrentSpecialPower;         
-
+            
+          newCurrentSpecialPower = currentSpecialPower + specialPowerIncreasePerHit;
+          currentSpecialPower = newCurrentSpecialPower;
+          Debug.LogWarning("I CAN FEEL THE POWER");
+            
+            
         }
     }
 
@@ -558,12 +564,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
     {
         AttackPointActive = true;
         Weapon.weaponRB.detectCollisions = true;
+        PowerCanIncrease = true;
         print("RB ENABLED");
     }
     public void DisableAttackPoint()
     {
         AttackPointActive = false;
         Weapon.weaponRB.detectCollisions = false;
+        PowerCanIncrease = false;
         print("RB Disabled");
     }
     #endregion

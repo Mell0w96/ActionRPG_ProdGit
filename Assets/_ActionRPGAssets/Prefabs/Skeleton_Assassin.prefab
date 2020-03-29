@@ -6538,7 +6538,6 @@ GameObject:
   - component: {fileID: 6687069837140703390}
   - component: {fileID: 308688307}
   - component: {fileID: 6687069837140703361}
-  - component: {fileID: 8725143786503695804}
   - component: {fileID: 1781629559}
   - component: {fileID: 308688308}
   m_Layer: 0
@@ -6673,7 +6672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalHealth: 50
   currentHealth: 0
-  healthDrop: {fileID: 5799192135915229011, guid: e73c977748144b34696aa4cb31ad55dd,
+  healthDrop: {fileID: 8432463254133068862, guid: 171ebf3c346f3444191d8b2a75817376,
     type: 3}
 --- !u!195 &6687069837140703361
 NavMeshAgent:
@@ -6697,19 +6696,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &8725143786503695804
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6686673604579719560}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 14.1
-  m_Center: {x: 0, y: -1.3, z: 0}
 --- !u!114 &1781629559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6729,7 +6715,7 @@ MonoBehaviour:
   FindNewPathTime: 4
   Player: {fileID: 0}
   helpAllyRadius: 0
-  stalkingDistance: 0
+  stalkingDistance: 8
   chasingRange: 6
   maximumChasingRange: 8
   dissengageTimer: 20

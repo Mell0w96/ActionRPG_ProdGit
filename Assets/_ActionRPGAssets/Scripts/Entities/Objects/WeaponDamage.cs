@@ -8,12 +8,13 @@ public class WeaponDamage : MonoBehaviour
     private float newWeaponDmg;
     [SerializeField]
     EnemyHealth enemy;
+    [SerializeField]
     CharacterControls playerRef;
     public bool isAbility;
 
     private void Start()
     {
-        playerRef = gameObject.GetComponentInParent<CharacterControls>();
+        playerRef = FindObjectOfType<CharacterControls>();
         if (isAbility)
         {
             newWeaponDmg = weaponDmg * 4;
@@ -24,6 +25,7 @@ public class WeaponDamage : MonoBehaviour
     private void Update()
     {
         print(weaponDmg + "Weapon DAMAGE");
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,9 +33,16 @@ public class WeaponDamage : MonoBehaviour
         if (other.gameObject.tag == "enemy")
         {
             enemy = other.gameObject.GetComponent<EnemyHealth>();
-           
-                DealDamage(weaponDmg);
-                playerRef.IncreasePower();
+            DealDamage(weaponDmg);
+            if (playerRef != null && enemy != null)
+            {
+                if (playerRef.PowerCanIncrease == true)
+                {
+                    playerRef.IncreasePower();
+                }
+               
+            }
+            
           
             //Debug.Log(weaponDmg + "Weapon Damage");
         }
@@ -43,9 +52,12 @@ public class WeaponDamage : MonoBehaviour
     {
         if (other.gameObject.tag == "enemy")
         {
-            playerRef.IncreasePower(0);
-            playerRef.AttackPointActive = false;
-           
+            // playerRef.IncreasePower(0);
+            //playerRef.AttackPointActive = false;
+
+            enemy = null;         
+            
+
         }
     }
 
