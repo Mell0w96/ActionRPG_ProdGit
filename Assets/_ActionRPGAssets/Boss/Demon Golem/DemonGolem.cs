@@ -65,6 +65,9 @@ public class DemonGolem : BossBehaviour, Idamageable
         animatorComponent = this.GetComponent<Animator>();
         navMeshAgentComponent = this.GetComponent<NavMeshAgent>();
         CurrentHealth = StartingHealth;
+
+        RecentlyHit = new List<Idamageable>();
+
     }
 
     // Update is called once per frame
@@ -156,8 +159,11 @@ public class DemonGolem : BossBehaviour, Idamageable
         animatorComponent.SetFloat("WalkSpeed", navMeshAgentComponent.speed);
     }
 
-   protected void OnTriggerEnter(Collider other)
+   /*private void OnTriggerEnter(Collider other)
     {
+
+        Debug.Log(other + "Entered The TriggerCollider");
+
         if (BossActive && other.GetComponent<Idamageable>() != null)
         {
             if (AttackType == BossAttackType.NULL)
@@ -172,7 +178,7 @@ public class DemonGolem : BossBehaviour, Idamageable
                 DealDamage(HeavyAttackDamage,other.GetComponent<Idamageable>());
             }
         }
-    }
+    }*/
 
     bool CheckForPlayer()
     {
@@ -209,6 +215,9 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     public void DealDamage(float damageAmmount,Idamageable target)
     {
+
+        Debug.Log("Attacking " + target);
+
         if(RecentlyHit.Contains(target) == false)
         {
             target.TakeDamage(damageAmmount);

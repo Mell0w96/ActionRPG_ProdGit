@@ -7,7 +7,7 @@ public abstract class BossBehaviour : MonoBehaviour
     [Tooltip("Make Sure The Arena Has A Trigger Collider on The Arena Entrance")]
   
 
-    protected bool BossActive = false;
+    [HideInInspector] public bool BossActive = false;
     [HideInInspector] public GameObject playerTarget;
 
 
