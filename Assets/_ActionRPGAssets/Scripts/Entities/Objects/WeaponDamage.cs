@@ -6,7 +6,7 @@ public class WeaponDamage : MonoBehaviour
 {
     public float weaponDmg;
     [SerializeField]
-    EnemyHealth enemy;
+    Idamageable enemy;
     
     
 
@@ -14,7 +14,7 @@ public class WeaponDamage : MonoBehaviour
     {
         if (other.gameObject.tag == "enemy")
         {
-            enemy = other.gameObject.GetComponent<EnemyHealth>();
+            enemy = other.gameObject.GetComponent<Idamageable>();
             DealDamage(weaponDmg);
         }
     }

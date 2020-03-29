@@ -1152,7 +1152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTarget: {fileID: 0}
-  WalkSpeedPerSecond: 0
-  StartingHealth: 0
-  LightAttackDamage: 0
-  HeavyAttackDamage: 0
+  WalkSpeed: 2
+  StartingHealth: 50
+  AttackRange: 5
+  LightAttackDamage: 6
+  HeavyAttackDamage: 15
+  LightAttackDuration: 0
+  HeavyAttackDuration: 0
