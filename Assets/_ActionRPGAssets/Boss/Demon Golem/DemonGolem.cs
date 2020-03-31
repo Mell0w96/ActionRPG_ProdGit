@@ -232,7 +232,7 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     void OnDeathAnalytics()
     {
-        Analytics.CustomEvent("EnteringBossArena", new Dictionary<string, object>
+        Analytics.CustomEvent("DefeatingBoss", new Dictionary<string, object>
         {
             {"BossType",this.gameObject.name},
             {"DeathTime", Time.timeSinceLevelLoad}

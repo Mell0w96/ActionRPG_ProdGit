@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7900942460042101753}
   - component: {fileID: 6358947137677625005}
   - component: {fileID: 5039335028786413645}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg 4
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1411689032735255466
 Transform:
@@ -106,12 +106,12 @@ GameObject:
   - component: {fileID: 1005641646519401898}
   - component: {fileID: 6885445141812718798}
   - component: {fileID: 2124971754092583269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg 2
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6866613129441829923
 Transform:
@@ -200,12 +200,12 @@ GameObject:
   - component: {fileID: 864517920552417872}
   - component: {fileID: 5710901531825095860}
   - component: {fileID: 1096483486998341792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg 1
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1551439709118662086
 Transform:
@@ -291,9 +291,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2398843930770479975}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scaffolding
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -329,12 +329,12 @@ GameObject:
   - component: {fileID: 701561139424180916}
   - component: {fileID: 474223719807593893}
   - component: {fileID: 105121604716605450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Leg 3
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5912791415108319523
 Transform:
@@ -423,12 +423,12 @@ GameObject:
   - component: {fileID: 393073857078652477}
   - component: {fileID: 1985109785277718524}
   - component: {fileID: 2424974397611341010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6052200910433317811
 Transform:
