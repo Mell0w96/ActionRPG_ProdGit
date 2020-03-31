@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Analytics;
 
 
 public enum GolemBossStates
@@ -159,26 +160,7 @@ public class DemonGolem : BossBehaviour, Idamageable
         animatorComponent.SetFloat("WalkSpeed", navMeshAgentComponent.speed);
     }
 
-   /*private void OnTriggerEnter(Collider other)
-    {
 
-        Debug.Log(other + "Entered The TriggerCollider");
-
-        if (BossActive && other.GetComponent<Idamageable>() != null)
-        {
-            if (AttackType == BossAttackType.NULL)
-            {
-            }
-            else if (AttackType == BossAttackType.LIGHT)
-            {
-                //do light damage
-                DealDamage(LightAttackDamage, other.GetComponent<Idamageable>());
-            } else if (AttackType == BossAttackType.HEAVY)
-            {
-                DealDamage(HeavyAttackDamage,other.GetComponent<Idamageable>());
-            }
-        }
-    }*/
 
     bool CheckForPlayer()
     {
@@ -208,10 +190,7 @@ public class DemonGolem : BossBehaviour, Idamageable
         }
     }
 
-    void Die()
-    {
-        Destroy(this.gameObject,2f);
-    }
+  
 
     public void DealDamage(float damageAmmount,Idamageable target)
     {
@@ -243,4 +222,24 @@ public class DemonGolem : BossBehaviour, Idamageable
             Die();
         }
     }
+
+    void Die()
+    {
+        OnDeathAnalytics();
+
+        Destroy(this.gameObject, 2f);
+    }
+
+    void OnDeathAnalytics()
+    {
+        Analytics.CustomEvent("EnteringBossArena", new Dictionary<string, object>
+        {
+            {"BossType",this.gameObject.name},
+            {"DeathTime", Time.timeSinceLevelLoad}
+            
+        });
+    }
+
+
+
 }
