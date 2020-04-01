@@ -32,7 +32,8 @@ public class EnemyHealth : MonoBehaviour, Idamageable
         {
             Instantiate(healthDrop, this.transform.position + new Vector3(0f, 0.41f, 0f), transform.rotation* Quaternion.Euler(-90f, 0f, 0f) );
             Destroy(this.gameObject);
-            
+
+            GameManager.GMinstance.EnemyDied();
         }
 
         enemyHealthUI.SetValue(currentHealth);

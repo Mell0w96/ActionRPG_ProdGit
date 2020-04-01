@@ -26,6 +26,7 @@ public class DemonGolem : BossBehaviour, Idamageable
     [Range(1,50)] public float WalkSpeed;
     [Range(100, 2000)]
     public float StartingHealth;
+    [SerializeField]
     float CurrentHealth;
 
     [Range(5, 15)]
