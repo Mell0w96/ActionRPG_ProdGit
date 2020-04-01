@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour
     float minYconstraint = -35f;
     float maxYconstraint = 60f;
 
+    [HideInInspector] public bool IsActive = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,10 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraControl();
+        if (IsActive == true)
+        {
+            CameraControl();
+        }
     }
 
     void CameraControl()    

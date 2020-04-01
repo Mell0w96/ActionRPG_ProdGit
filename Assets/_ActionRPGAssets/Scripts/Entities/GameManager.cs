@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -23,8 +26,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    int numberOfEnemies;  
+    int numberOfEnemies;
 
+    public Canvas PauseScreenCanvas;
+    public CameraController cameraControllerComponent;
 
     public void EnemyDied()
     {
@@ -33,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator WaitToUpdateKillCount()
     {
-        while (this.isActiveAndEnabled)
+        while (this.gameObject.activeSelf)
         {
             KillCounter();
             yield return new WaitForSeconds(30);
@@ -42,6 +47,23 @@ public class GameManager : MonoBehaviour
        
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P)|| Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseScreenCanvas.gameObject.SetActive(true);
+            cameraControllerComponent.IsActive = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            
+        } else if (Input.GetKeyUp(KeyCode.P)|| Input.GetKeyUp(KeyCode.Escape))
+        {
+            PauseScreenCanvas.gameObject.SetActive(false);
+            cameraControllerComponent.IsActive = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
 
     void KillCounter()
     {
@@ -51,5 +73,15 @@ public class GameManager : MonoBehaviour
             {"Number of Enemies Dead", numberOfEnemies },
             {"CheckInTime", Time.timeSinceLevelLoad}
             });
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+    
+    public void restartGame()
+    {
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
