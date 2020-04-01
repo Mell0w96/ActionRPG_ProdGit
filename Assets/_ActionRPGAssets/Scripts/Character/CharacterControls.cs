@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class CharacterControls : MonoBehaviour, Idamageable
 {
@@ -468,6 +469,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         // when health reaches 0 restart scene
         if (currentHealth <= 0) 
         {
+            PlayerDeathAnalytics();
             Scene thisScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(thisScene.name);
 
@@ -604,4 +606,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
         print("RB Disabled");
     }
     #endregion
+
+
+    void PlayerDeathAnalytics()
+    {
+        Analytics.CustomEvent("GatherringPlayerDeathInfo", new Dictionary<string, object>
+        {
+            { "DeathLocation", this.transform.position},
+            { "TimeOfDeath", Time.timeSinceLevelLoad}
+        });
+    }
 }

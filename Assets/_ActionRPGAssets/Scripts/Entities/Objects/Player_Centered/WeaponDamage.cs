@@ -6,8 +6,8 @@ public class WeaponDamage : MonoBehaviour
 {
     public float weaponDmg;
     private float newWeaponDmg;
-    [SerializeField]
-    EnemyHealth enemy;
+    [SerializeField]    
+    Idamageable enemy;
     [SerializeField]
     CharacterControls playerRef;
     public bool isAbility;
@@ -32,7 +32,7 @@ public class WeaponDamage : MonoBehaviour
     {
         if (other.gameObject.tag == "enemy")
         {
-            enemy = other.gameObject.GetComponent<EnemyHealth>();
+            enemy = other.gameObject.GetComponent<Idamageable>();
             DealDamage(weaponDmg);
             if (playerRef != null && enemy != null)
             {

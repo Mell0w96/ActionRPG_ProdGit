@@ -262,7 +262,7 @@ MonoBehaviour:
   currentStamina: 0
   StartingStamina: 100
   staminaDecreaseRate: 5
-  staminaIncreaseRate: 1
+  staminaIncreaseRate: 3
   hasAttacked: 0
   Weapon: {fileID: 0}
   RightFist: {fileID: 8609024042684578384}
@@ -274,20 +274,23 @@ MonoBehaviour:
   specialPowerDecreasePerHit: 10
   PowerCanIncrease: 0
   AbilityReady: 0
-  maxSlopeAngle: 120
+  AttackPointActive: 0
+  maxSlopeAngle: 240
+  healthUI: {fileID: 0}
+  energyUI: {fileID: 0}
+  AbilityPowerUI: {fileID: 0}
+  AbilityPowerBarImage: {fileID: 0}
   anim: {fileID: 0}
   rb: {fileID: 0}
   walkable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   canPickUp: 0
   interactions:
     serializedVersion: 2
-    m_Bits: 4294967295
-  SearchRadius: 1
+    m_Bits: 512
+  SearchRadius: 2
   projectilePoint: {fileID: 0}
-  windSlashPrefab: {fileID: 3266821895633682349, guid: a9eecc1bcad5630458ed4e3df4209546,
-    type: 3}
 --- !u!54 &2037974254866942775
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1880,6 +1883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDmg: 5
   enemy: {fileID: 0}
+  playerRef: {fileID: 0}
   isAbility: 0
 --- !u!1 &8609024042684578384
 GameObject:
@@ -1940,4 +1944,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDmg: 5
   enemy: {fileID: 0}
+  playerRef: {fileID: 0}
   isAbility: 0

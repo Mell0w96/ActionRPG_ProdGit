@@ -26,6 +26,7 @@ public class DemonGolem : BossBehaviour, Idamageable
     [Range(1,50)] public float WalkSpeed;
     [Range(100, 2000)]
     public float StartingHealth;
+    [SerializeField]
     float CurrentHealth;
 
     [Range(5, 15)]
@@ -232,7 +233,7 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     void OnDeathAnalytics()
     {
-        Analytics.CustomEvent("EnteringBossArena", new Dictionary<string, object>
+        Analytics.CustomEvent("DefeatingBoss", new Dictionary<string, object>
         {
             {"BossType",this.gameObject.name},
             {"DeathTime", Time.timeSinceLevelLoad}
