@@ -2,32 +2,24 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SkeletonAssassinBehaviour : MonoBehaviour
+public class SkeletonAssassinBehaviour : EnemyBase
 {
     private SkeletonState _currentState;
 
     // Scouting and Assist variables
-    NavMeshAgent agent;
-    NavMeshPath path;
+    
 
     public Material visible;
     public Material invisible;
     public Renderer stateOfVision;
-    public float movementSpeed;
-    public float FindNewPathTime;
-    public CharacterControls Player;
-    private Animator anim;
+    
     private bool playerInbound;
 
     private GameObject Ally;
 
     public float helpAllyRadius;
 
-    Vector3 Target;
-
-    bool coroutineIsWorking;
-    bool pathIsValid;
-
+    
     // Stalking variables
     // public CharacterControls player;
     public float stalkingDistance;
@@ -52,37 +44,17 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
 
 
-
-
-
-
-    private void Start()
+    public override void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        path = new NavMeshPath();
+        base.Start();
         stateOfVision.material = visible;
-        agent.speed = movementSpeed;
-        anim = GetComponent<Animator>();
         Ally = GameObject.FindGameObjectWithTag("Ally");
-
-        Player = FindObjectOfType<CharacterControls>();
-       // player = FindObjectOfType<CharacterControls>();
-
-        
         stateOfVision.material = invisible;
-
-
-        NavMeshHit closestHit;
-
-        if (NavMesh.SamplePosition(gameObject.transform.position, out closestHit, 500f, 1))
-            gameObject.transform.position = closestHit.position;
-        else
-            Debug.LogError("Could not find position on NavMesh!");
     }
 
-    private void Update()
+    public override void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position, Player.transform.position);
+        float playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
         if (playerDistance <= stalkingDistance)
         {
@@ -128,7 +100,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     stateOfVision.material = invisible;
                     agent.speed = movementSpeed;
 
-                    agent.SetDestination(Player.transform.position);
+                    agent.SetDestination(player.transform.position);
 
                     // calculate distance from player
 
@@ -157,7 +129,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     stateOfVision.material = visible;
                     anim.SetInteger("AnimationValue", 1);
                     agent.speed = movementSpeed * movementSpeedX;
-                    agent.SetDestination(Player.transform.position);
+                    agent.SetDestination(player.transform.position);
                     
                     
                     if (playerDistance < attackRange)
@@ -206,7 +178,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     if (playerDistance > attackRange) 
                     {
                         _currentState = SkeletonState.Engaging;
-                        agent.SetDestination(Player.transform.position);
+                        agent.SetDestination(player.transform.position);
 
                     }
 
@@ -219,9 +191,9 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     agent.speed = runAwaySpeed;
                     stateOfVision.material = invisible;
                     // calculate distance from player
-                    float DistanceFromPlayer = Vector3.Distance(transform.position, Player.transform.position);
+                    float DistanceFromPlayer = Vector3.Distance(transform.position, player.transform.position);
                     // player to enemy vector
-                    Vector3 FromToPlayer = transform.position - Player.transform.position;
+                    Vector3 FromToPlayer = transform.position - player.transform.position;
                     // add the previous vector to the position of the thief
                     Vector3 runDirection = transform.position + FromToPlayer;
 
@@ -253,49 +225,17 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         anim.SetInteger("AnimationValue", 1);
 
     }
-    
 
-   
-   
 
-    void GetNewPathCoordinates()
+
+
+
+
+
+    public override IEnumerator ChangeDirection()
     {
-
-        float GoPosX = this.transform.position.x;
-        float GoPosZ = this.transform.position.z;
-
-        float x = GoPosX + Random.Range(- 20f, 20f);
-        float z = GoPosZ + Random.Range(- 20f, 20f);
-
-        Vector3 position = new Vector3(x, this.transform.position.y, z);
-        Target = position;
-
-        agent.SetDestination(Target);
-
-       // print("position" + position + gameObject.name);
-    }
-
-
-    IEnumerator ChangeDirection()
-    {
-        coroutineIsWorking = true;
-
-        // Get the new path and set it to navmesh agent as destination 
-        GetNewPathCoordinates();
-        yield return new WaitForSeconds(FindNewPathTime);
-        pathIsValid = agent.CalculatePath(Target, path);
         anim.SetInteger("AnimationValue", 0);
-        //if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
-
-        while (!pathIsValid)
-        {
-            yield return new WaitForSeconds(0.07f);
-            GetNewPathCoordinates();
-            pathIsValid = agent.CalculatePath(Target, path);
-        }
-
-
-        coroutineIsWorking = false;
+        return base.ChangeDirection();
     }
 }
 public enum SkeletonState

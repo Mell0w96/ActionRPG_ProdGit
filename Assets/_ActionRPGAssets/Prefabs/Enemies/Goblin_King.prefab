@@ -3179,10 +3179,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FindNewPathTime: 5
-  visionCone: {fileID: 8103002907304286483}
-  _movementSpeed: 1.5
-  speedMultiplier: 1.8
+  agent: {fileID: 0}
+  coroutineIsWorking: 0
+  pathIsValid: 0
+  Target: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
+  movementSpeed: 2
   player: {fileID: 0}
+  visionCone: {fileID: 8103002907304286483}
+  speedMultiplier: 1.8
   startRateUntilScanning: 10
   _totalScanTime: 7
   meleeRange: 2

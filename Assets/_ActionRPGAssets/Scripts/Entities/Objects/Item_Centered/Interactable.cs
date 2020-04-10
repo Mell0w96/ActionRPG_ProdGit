@@ -78,7 +78,7 @@ public abstract class Interactable : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Player.canPickUp = false;
-            Debug.Log("Can not Pick Up!");
+            //Debug.Log("Can not Pick Up!");
         }
     }
 

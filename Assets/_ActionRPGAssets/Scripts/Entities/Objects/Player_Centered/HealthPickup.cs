@@ -27,7 +27,7 @@ public class HealthPickup : Interactable
         }
         else
         {
-            Debug.Log("full health");
+           // Debug.Log("full health");
         }
         
       

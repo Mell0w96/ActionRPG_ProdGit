@@ -533,7 +533,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
             }
             else 
             {
-                Debug.LogWarning("NOPE"); // else don't
+              //  Debug.LogWarning("NOPE"); // else don't
 
             }
         }
@@ -555,7 +555,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
           if (AbilityReady)
                  {
                      Weapon.PerfromMainAbility();
-                     print("BOOM BOOM ");
+                    // print("BOOM BOOM ");
                  }
      }
 
@@ -574,7 +574,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
             
           newCurrentSpecialPower = currentSpecialPower + specialPowerIncreasePerHit;
           currentSpecialPower = newCurrentSpecialPower;
-          Debug.LogWarning("I CAN FEEL THE POWER");
+          //Debug.LogWarning("I CAN FEEL THE POWER");
             
             
         }
@@ -596,14 +596,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
         AttackPointActive = true;
         Weapon.weaponRB.detectCollisions = true;
         PowerCanIncrease = true;
-        print("RB ENABLED");
+       // print("RB ENABLED");
     }
     public void DisableAttackPoint()
     {
         AttackPointActive = false;
         Weapon.weaponRB.detectCollisions = false;
         PowerCanIncrease = false;
-        print("RB Disabled");
+        //print("RB Disabled");
     }
     #endregion
 

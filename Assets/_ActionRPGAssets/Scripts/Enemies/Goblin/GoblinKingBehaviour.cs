@@ -3,38 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GoblinKingBehaviour : MonoBehaviour
+public class GoblinKingBehaviour : EnemyBase
 {
-    // OnTheLookOut / Scanning Variables
-    NavMeshAgent agent;
-    NavMeshPath path;
-    public float FindNewPathTime;
-    Animator anim;
+    // OnTheLookOut / Scanning Variables    
     Vision vision;
-    public GameObject visionCone;
-    public float _movementSpeed;
+    public GameObject visionCone;    
     public float speedMultiplier;
-    private float stopSpeed = 0f;
-    bool coroutineIsWorking;
-    bool pathIsValid;
-    Vector3 Target;
-    public CharacterControls player;
+    private float stopSpeed = 0f;    
     private float currentRateUntilScanning;
     public float startRateUntilScanning;
-
     public float _totalScanTime;
-    private float totalScanTime;
-    
+    private float totalScanTime;    
 
     // Chasing Variables
     public float meleeRange;
     public float minRangedRange;
     public float maxRangedRange;
-    float distanceFromPlayer;
-
-  
-
-    
+    float distanceFromPlayer;    
 
     // Charging Variables
     public float rageSpeedMultiplier;
@@ -56,31 +41,16 @@ public class GoblinKingBehaviour : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        path = new NavMeshPath();
-        agent.speed = _movementSpeed;
-        anim = GetComponent<Animator>();
+        base.Start();
         vision = visionCone.GetComponent<Vision>();
-
-        player = FindObjectOfType<CharacterControls>();
-        
         currentRateUntilScanning = startRateUntilScanning;
         totalScanTime = _totalScanTime;
-
-        NavMeshHit closestHit;
-
-        if (NavMesh.SamplePosition(gameObject.transform.position, out closestHit, 500f, 1))
-            gameObject.transform.position = closestHit.position;
-        else
-            Debug.LogError("Could not find position on NavMesh!");
-
-
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         // calculate the distance between player and enemy
         distanceFromPlayer = Vector3.Distance(player.transform.position, transform.position);
@@ -91,7 +61,7 @@ public class GoblinKingBehaviour : MonoBehaviour
             case GoblinState.OntheLookOut:
                 {                       
                     currentRateUntilScanning -= Time.deltaTime; // start countdown for the scanning state
-                    agent.speed = _movementSpeed; // set navmesh agent speed to pubblic variable _movementSpeed
+                    agent.speed = movementSpeed; // set navmesh agent speed to pubblic variable _movementSpeed
                     //print("ONTHELOOKOUT");
                     //print("currentRateUntilScanning" + currentRateUntilScanning );
                     
@@ -115,7 +85,7 @@ public class GoblinKingBehaviour : MonoBehaviour
 
                     if (vision.isInVision == true) // if player comes into vision cone trigger, switch to chasing state
                     {
-                        print("Chasing");
+                       // print("Chasing");
                         _currentState = GoblinState.Chasing;
                     }
 
@@ -144,7 +114,7 @@ public class GoblinKingBehaviour : MonoBehaviour
 
                     if (vision.isInVision == true) // if player comes into vision, switch to chasing state
                     {
-                        print("Chasing");
+                       // print("Chasing");
                         _currentState = GoblinState.Chasing;
                         anim.SetBool("isScanning", false);
                     }
@@ -156,10 +126,10 @@ public class GoblinKingBehaviour : MonoBehaviour
             case GoblinState.Chasing: 
                 {
                     agent.SetDestination(player.transform.position);  // set nav mesh agent's destination to the player's position
-                    agent.speed = _movementSpeed * speedMultiplier; // make the goblin run faster
+                    agent.speed = movementSpeed * speedMultiplier; // make the goblin run faster
                     anim.SetBool("isChasing", true); // set animation bool to run the animation
 
-                    print("PLAYER FOUND PLAYER FOUND");
+                    //print("PLAYER FOUND PLAYER FOUND");
 
                     //if player comes within vision then chase 
                     if (distanceFromPlayer <= meleeRange) // if player comes into melee range, perform melee attack
@@ -172,7 +142,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                     }
                     else if (distanceFromPlayer > minRangedRange && distanceFromPlayer <= maxRangedRange) // if player comes into spear range, throw spear 
                     {
-                        print("SPEAR TIME");
+                      //  print("SPEAR TIME");
                         //throw spear at player
                         _currentState = GoblinState.ThrowingSpear;
                         throwingRate = 0f; // set throwing rate timer to 0 for instant throw
@@ -276,46 +246,15 @@ public class GoblinKingBehaviour : MonoBehaviour
         anim.SetInteger("AttackValue", 0);
 
     }
-  
 
 
-    IEnumerator ChangeDirection()
+
+    public override IEnumerator ChangeDirection()
     {
-        coroutineIsWorking = true;
-
-        // Get the new path and set it to navmesh agent as destination 
-        GetNewPathCoordinates();
-        yield return new WaitForSeconds(FindNewPathTime); // time to wait before finding new path
-        pathIsValid = agent.CalculatePath(Target, path); // set path to direction going to target
         anim.SetBool("isChasing", false); // make sure regular walking animation is playing
-       // if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
-
-        while (!pathIsValid) // if path is not valid, reepeat the process
-        {
-            yield return new WaitForSeconds(0.07f);
-            GetNewPathCoordinates();
-            pathIsValid = agent.CalculatePath(Target, path);
-        }
-
-
-        coroutineIsWorking = false;
-    }
-
-    void GetNewPathCoordinates() // sets agent's destination to the new random position 
-    {
-        float GoPosX = this.transform.position.x;
-        float GoPosZ = this.transform.position.z;
-
-        float x = GoPosX + Random.Range(-20f, 20f);
-        float z = GoPosZ + Random.Range(-20f, 20f);
-
-        Vector3 position = new Vector3(x, this.transform.position.y, z);
-        Target = position;
-
-        agent.SetDestination(Target);
-
-        //print("position" + position + gameObject.name);
-    }
+        return base.ChangeDirection();
+        
+    } 
 
  
 }

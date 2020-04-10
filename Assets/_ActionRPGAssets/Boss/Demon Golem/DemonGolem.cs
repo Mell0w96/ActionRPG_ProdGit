@@ -200,7 +200,7 @@ public class DemonGolem : BossBehaviour, Idamageable
     public void DealDamage(float damageAmmount,Idamageable target)
     {
 
-        Debug.Log("Attacking " + target);
+       // Debug.Log("Attacking " + target);
 
         if(RecentlyHit.Contains(target) == false)
         {

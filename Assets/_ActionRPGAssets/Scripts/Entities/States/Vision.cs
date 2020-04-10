@@ -12,8 +12,8 @@ public class Vision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("IN VISION");
-            Debug.Log(isInVision);
+           // Debug.Log("IN VISION");
+           // Debug.Log(isInVision);
             isInVision = true;
         }
     }
@@ -31,8 +31,8 @@ public class Vision : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("I'm NOT IN VISION");
-            Debug.Log(isInVision);
+           // Debug.Log("I'm NOT IN VISION");
+            //Debug.Log(isInVision);
             isInVision = false;
         }
     }
