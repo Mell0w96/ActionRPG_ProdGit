@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     public Canvas PauseScreenCanvas;
     public CameraController cameraControllerComponent;
-    public Scene TitleScene;
+    //public Scene TitleScene;
     bool PauseScreenActive = false;
 
     public void EnemyDied()
@@ -94,6 +94,6 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToTitle()
     {
-        SceneManager.LoadScene(TitleScene.name);
+        SceneManager.LoadScene("TitleScreen");
     }
 }
