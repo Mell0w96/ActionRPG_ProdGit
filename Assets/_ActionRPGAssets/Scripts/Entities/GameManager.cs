@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public Canvas PauseScreenCanvas;
     public CameraController cameraControllerComponent;
+    public Scene TitleScene;
+    bool PauseScreenActive = false;
 
     public void EnemyDied()
     {
@@ -51,18 +53,23 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P)|| Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseScreenCanvas.gameObject.SetActive(true);
-            cameraControllerComponent.IsActive = false;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (!PauseScreenActive)
+            {
+                PauseScreenCanvas.gameObject.SetActive(true);
+                cameraControllerComponent.IsActive = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                PauseScreenActive = true;
+            } else if (PauseScreenActive)
+            {
+                PauseScreenCanvas.gameObject.SetActive(false);
+                cameraControllerComponent.IsActive = true;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                PauseScreenActive = false;
+            }
             
-        } else if (Input.GetKeyUp(KeyCode.P)|| Input.GetKeyUp(KeyCode.Escape))
-        {
-            PauseScreenCanvas.gameObject.SetActive(false);
-            cameraControllerComponent.IsActive = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        } 
     }
 
     void KillCounter()
@@ -83,5 +90,10 @@ public class GameManager : MonoBehaviour
     public void restartGame()
     {
        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene(TitleScene.name);
     }
 }

@@ -54,7 +54,8 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     GolemBossStates CurrentState = GolemBossStates.WAITING;
 
-
+    public GameObject deathParticle;
+    bool OnDeathAnalyticCalled = false;
 
 
 
@@ -69,7 +70,10 @@ public class DemonGolem : BossBehaviour, Idamageable
         CurrentHealth = StartingHealth;
 
         RecentlyHit = new List<Idamageable>();
-
+        if (deathParticle != null)
+        {
+            deathParticle.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -226,9 +230,17 @@ public class DemonGolem : BossBehaviour, Idamageable
 
     void Die()
     {
-        OnDeathAnalytics();
+        if (OnDeathAnalyticCalled == false)
+        {
+            OnDeathAnalytics();
+        }
 
-        Destroy(this.gameObject, 2f);
+        if(deathParticle.activeSelf == false & deathParticle != null)
+        {
+            deathParticle.SetActive(true);
+        }
+
+        Destroy(this.gameObject, 1f);
     }
 
     void OnDeathAnalytics()
@@ -239,8 +251,21 @@ public class DemonGolem : BossBehaviour, Idamageable
             {"DeathTime", Time.timeSinceLevelLoad}
             
         });
+        OnDeathAnalyticCalled = true;
     }
+    public static GameManager GMinstance;
+    private void OnDestroy()
+    {
+        if(GMinstance == null)
+        {
+            Debug.LogWarning("Didn't subscribe to singleton properl");
+        } else
+        {
+            GMinstance.ReturnToTitle();
+        }
 
+
+    }
 
 
 }

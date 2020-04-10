@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/_ActionRPGAssets/Scenes/Level1.unity
     guid: 51fab6bb6225e24448c82b3f28290d6f
   - enabled: 1
+    path: Assets/_ActionRPGAssets/Scenes/TitleScreen.unity
+    guid: e465066175eebfe4b91ef0625454ec40
+  - enabled: 1
     path: Assets/_ActionRPGAssets/Scenes/Level2(Final).unity
     guid: 9d3ababc1cafa8a4bb92548ad3f35ac7
   m_configObjects: {}
