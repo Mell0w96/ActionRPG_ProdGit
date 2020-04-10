@@ -87,12 +87,12 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         if (playerDistance <= stalkingDistance)
         {
             playerInbound = true;
-            Debug.Log("INBOUND PLAYER INBOUND");
+           // Debug.Log("INBOUND PLAYER INBOUND");
         }
         else
         {
             playerInbound = false;
-            Debug.Log("Player has left the chat");
+            //Debug.Log("Player has left the chat");
         }
         switch (_currentState) 
         {
@@ -116,7 +116,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     if (playerInbound == true) 
                     {
                         _currentState = SkeletonState.Stalking;
-                         print("I SEE YOU");                   
+                         //print("I SEE YOU");                   
                     
                     }
 
@@ -136,7 +136,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
                     if (playerDistance < chasingRange)
                     {
-                        print("COME HERE");
+                       // print("COME HERE");
                         _currentState = SkeletonState.Engaging;
 
                         
@@ -153,7 +153,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
             case SkeletonState.Engaging:
                 {
                    
-                    print("ENGAGING");
+                   // print("ENGAGING");
                     stateOfVision.material = visible;
                     anim.SetInteger("AnimationValue", 1);
                     agent.speed = movementSpeed * movementSpeedX;
@@ -272,7 +272,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
         agent.SetDestination(Target);
 
-        print("position" + position + gameObject.name);
+       // print("position" + position + gameObject.name);
     }
 
 
@@ -285,7 +285,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
         yield return new WaitForSeconds(FindNewPathTime);
         pathIsValid = agent.CalculatePath(Target, path);
         anim.SetInteger("AnimationValue", 0);
-        if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
+        //if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
 
         while (!pathIsValid)
         {

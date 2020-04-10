@@ -239,7 +239,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("ITEM ADDED");
+           // Debug.Log("ITEM ADDED");
             
             anim.SetBool("PickingUp", true);
 
@@ -272,7 +272,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         if (!Weapon)
         {
             anim.SetInteger("PlayerState", 0);
-            print("No Weapon");
+            //print("No Weapon");
             RightFist.SetActive(true);
             LeftFist.SetActive(true);
         }
@@ -280,7 +280,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         {
             anim.SetInteger("PlayerState", Weapon.setPlayerState);
             anim.SetFloat("AttackSpeed", Weapon.setAttackSpeed);
-            print("There is Weapon");
+           // print("There is Weapon");
             RightFist.SetActive(false);
             LeftFist.SetActive(false);
                     
@@ -387,14 +387,14 @@ public class CharacterControls : MonoBehaviour, Idamageable
             if (Input.GetButtonDown("Fire1"))
             {
                 Attacking();
-                print("PUNCHING");
+                //print("PUNCHING");
                 
                 
             }
             else 
             {
                 anim.SetInteger("AttackValue", 0);
-                print("AttackValue is 0");
+               // print("AttackValue is 0");
                 
             }                   
             
@@ -520,7 +520,7 @@ public class CharacterControls : MonoBehaviour, Idamageable
         RaycastHit[] hits;
 
         hits = Physics.SphereCastAll(this.transform.position, _range, Vector3.forward, 0.01f, _layermask); // store hits as spherecast collision points
-        Debug.Log(hits.Length);
+        //Debug.Log(hits.Length);
 
         for (int _i = 0; _i < hits.Length; _i++)
         {

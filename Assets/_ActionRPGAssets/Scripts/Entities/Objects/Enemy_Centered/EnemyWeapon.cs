@@ -16,7 +16,7 @@ public class EnemyWeapon : MonoBehaviour , IdamageDealer
     {
         if (other.gameObject.tag == "Player")
         {
-            print("HIT");
+            //print("HIT");
             DealDamage(damageAmmount);
 
         }

@@ -69,7 +69,7 @@ public abstract class Interactable : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Player.canPickUp = true;
-            Debug.Log("Can Pick Up!");
+           // Debug.Log("Can Pick Up!");
         }
     }
 

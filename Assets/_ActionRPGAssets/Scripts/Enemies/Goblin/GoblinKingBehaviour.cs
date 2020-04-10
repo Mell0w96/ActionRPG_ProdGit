@@ -92,7 +92,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                 {                       
                     currentRateUntilScanning -= Time.deltaTime; // start countdown for the scanning state
                     agent.speed = _movementSpeed; // set navmesh agent speed to pubblic variable _movementSpeed
-                    print("ONTHELOOKOUT");
+                    //print("ONTHELOOKOUT");
                     //print("currentRateUntilScanning" + currentRateUntilScanning );
                     
                     anim.SetBool("isScanning", false); // make sure scanning animation doesn't play accidentally
@@ -126,7 +126,7 @@ public class GoblinKingBehaviour : MonoBehaviour
             case GoblinState.Scanning: 
                 {
 
-                    print("SCANNING NOW");
+                    //print("SCANNING NOW");
                     anim.SetBool("isScanning", true); // set scanning animation bool to true to run animation
                     totalScanTime -= Time.deltaTime; // start  scanning count down at the start of the state                 
 
@@ -288,7 +288,7 @@ public class GoblinKingBehaviour : MonoBehaviour
         yield return new WaitForSeconds(FindNewPathTime); // time to wait before finding new path
         pathIsValid = agent.CalculatePath(Target, path); // set path to direction going to target
         anim.SetBool("isChasing", false); // make sure regular walking animation is playing
-        if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
+       // if (!pathIsValid) Debug.Log("Could not Find Path, will recalculate");
 
         while (!pathIsValid) // if path is not valid, reepeat the process
         {
@@ -314,7 +314,7 @@ public class GoblinKingBehaviour : MonoBehaviour
 
         agent.SetDestination(Target);
 
-        print("position" + position + gameObject.name);
+        //print("position" + position + gameObject.name);
     }
 
  

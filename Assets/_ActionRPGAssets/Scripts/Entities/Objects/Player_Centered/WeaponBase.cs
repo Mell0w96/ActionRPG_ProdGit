@@ -44,11 +44,11 @@ public class WeaponBase : Interactable
         {
             if (PlayerItemSlot != null)
             {
-                Debug.Log("Item Slot Found");
+                //Debug.Log("Item Slot Found");
             }
             else
             {
-                Debug.Log("Item Slot Not Found");
+                //Debug.Log("Item Slot Not Found");
             }
         }
         

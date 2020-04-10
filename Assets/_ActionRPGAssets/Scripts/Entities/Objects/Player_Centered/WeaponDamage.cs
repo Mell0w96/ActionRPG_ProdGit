@@ -24,7 +24,7 @@ public class WeaponDamage : MonoBehaviour
 
     private void Update()
     {
-        print(weaponDmg + "Weapon DAMAGE");
+        //print(weaponDmg + "Weapon DAMAGE");
         
     }
 
