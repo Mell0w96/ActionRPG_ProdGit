@@ -68,7 +68,14 @@ public class GoblinKingBehaviour : MonoBehaviour
         
         currentRateUntilScanning = startRateUntilScanning;
         totalScanTime = _totalScanTime;
-        
+
+        NavMeshHit closestHit;
+
+        if (NavMesh.SamplePosition(gameObject.transform.position, out closestHit, 500f, 1))
+            gameObject.transform.position = closestHit.position;
+        else
+            Debug.LogError("Could not find position on NavMesh!");
+
 
     }
 
@@ -184,6 +191,7 @@ public class GoblinKingBehaviour : MonoBehaviour
                 }
             case GoblinState.Attacking: 
                 {
+                    agent.speed = 0f;
                     if (TimeTillNextAttackRate > 0) // if attack rate timer is greater than 0, continue counting down
                     {
                         TimeTillNextAttackRate -= Time.deltaTime;                       
@@ -268,17 +276,7 @@ public class GoblinKingBehaviour : MonoBehaviour
         anim.SetInteger("AttackValue", 0);
 
     }
-
-
-    Vector3 newRandomPosition() // returns a vector3 with random x and z values -- used in GetNewPathCoordinates()
-    {
-        float x = Random.Range(-20f, 20f);
-        float z = Random.Range(-20f, 20f);
-
-        Vector3 position = new Vector3(x, 0, z);
-        return position;
-
-    }
+  
 
 
     IEnumerator ChangeDirection()
@@ -305,9 +303,19 @@ public class GoblinKingBehaviour : MonoBehaviour
 
     void GetNewPathCoordinates() // sets agent's destination to the new random position 
     {
-        Target = newRandomPosition();
+        float GoPosX = this.transform.position.x;
+        float GoPosZ = this.transform.position.z;
 
-        agent.SetDestination(Target);    }
+        float x = GoPosX + Random.Range(-20f, 20f);
+        float z = GoPosZ + Random.Range(-20f, 20f);
+
+        Vector3 position = new Vector3(x, this.transform.position.y, z);
+        Target = position;
+
+        agent.SetDestination(Target);
+
+        print("position" + position + gameObject.name);
+    }
 
  
 }

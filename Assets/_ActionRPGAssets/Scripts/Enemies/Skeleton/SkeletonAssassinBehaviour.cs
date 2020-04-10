@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -71,6 +70,14 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
 
         
         stateOfVision.material = invisible;
+
+
+        NavMeshHit closestHit;
+
+        if (NavMesh.SamplePosition(gameObject.transform.position, out closestHit, 500f, 1))
+            gameObject.transform.position = closestHit.position;
+        else
+            Debug.LogError("Could not find position on NavMesh!");
     }
 
     private void Update()
@@ -145,6 +152,7 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                 }
             case SkeletonState.Engaging:
                 {
+                   
                     print("ENGAGING");
                     stateOfVision.material = visible;
                     anim.SetInteger("AnimationValue", 1);
@@ -164,14 +172,14 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                     
                     }
 
-                    if (dissengageTimer > 0)
+                   /* if (dissengageTimer > 0)
                     {
                         dissengageTimer -= Time.deltaTime;
                     }
                     else 
                     {
                         _currentState = SkeletonState.RunningAway;                    
-                    }
+                    }*/
 
 
                    
@@ -179,13 +187,14 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
                 }
             case SkeletonState.Attacking: 
                 {
+                    agent.speed = 0f;
                     //print("ATTACKING");
                     //print("Attacking" + currentAttackRate);
                     if (currentAttackRate > 0)
                     {
 
                         currentAttackRate -= Time.deltaTime;
-                        agent.SetDestination(Player.transform.position);
+                        //agent.SetDestination(Player.transform.position);
 
                     }
                     else
@@ -247,21 +256,23 @@ public class SkeletonAssassinBehaviour : MonoBehaviour
     
 
    
-    Vector3 newRandomPosition()
-    {
-        float x = Random.Range(-20f, 20f);
-        float z = Random.Range(-20f, 20f);
-
-        Vector3 position = new Vector3(x, 0, z);
-        return position;
-
-    }
+   
 
     void GetNewPathCoordinates()
     {
-        Target = newRandomPosition();
+
+        float GoPosX = this.transform.position.x;
+        float GoPosZ = this.transform.position.z;
+
+        float x = GoPosX + Random.Range(- 20f, 20f);
+        float z = GoPosZ + Random.Range(- 20f, 20f);
+
+        Vector3 position = new Vector3(x, this.transform.position.y, z);
+        Target = position;
 
         agent.SetDestination(Target);
+
+        print("position" + position + gameObject.name);
     }
 
 
